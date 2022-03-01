@@ -58,3 +58,12 @@ GPIO_PORTF_DEN_R |= 0x04
 
 GPI0_PORTF_PUR_R |= 0x04.          //0x0000.0100 --> enable pull up. 
 
+
+
+
+
+##Delay Function 
+
+#include "driverlib/sysctl.h"
+SysCtlDelay(2000000).  --> 200000 Loop. Each loop = 3 CPU cycle. 
+
