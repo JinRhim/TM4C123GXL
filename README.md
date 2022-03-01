@@ -28,7 +28,7 @@
 
 
 
-1)Enable Port F Clock 
+1. Enable Port F Clock 
 
 SYSCTL_RCGC2_R = SYSCTL_RCGC2_GPIOF 
 
@@ -37,24 +37,24 @@ SYSCTL_RCGC2_R = SYSCTL_RCGC2_GPIOF
 ui32Loop = SYSCTL_RCGC2_R 
 
 
-2)Unlock GPIO Port F 
+2. Unlock GPIO Port F 
 
 GPIO_PORTF_LOCK_R = 0x4C4F434B
 
-3) Change Commit Register
+3. Change Commit Register
 
 GPIO_PORTF_CR_R |= 0x01             //allow change to PF0 
 
 
-4) Direction (DIR) Register - Set PF2 to output
+4. Direction (DIR) Register - Set PF2 to output
 
 GPIO_PORTF_DIR_R |= 0x04.           //0x0000.0100 --> PF2:1  PF1:0 PF0:0 
 
-5) Enable PF2 for digital function 
+5. Enable PF2 for digital function 
 
 GPIO_PORTF_DEN_R |= 0x04 
 
-6) Enable Pull-up on PF0 
+6. Enable Pull-up on PF0 
 
 GPI0_PORTF_PUR_R |= 0x04.          //0x0000.0100 --> enable pull up. 
 
