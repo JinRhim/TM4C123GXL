@@ -71,7 +71,7 @@ SysCtlDelay(2000000).  --> 200000 Loop. Each loop = 3 CPU cycle.
 
 
 
-		//PF0 = SW2 (negative logic)
+	 //PF0 = SW2 (negative logic)
 	 //PF1 = Red LED 
 	 //PF2 = Blue LED 
 	 //PF3 = Green LED 
