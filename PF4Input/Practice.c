@@ -6,20 +6,19 @@ This program will turn off RED LED when pressed. Otherwise, LED will stay turned
 
 void
 PortFunctionInit(void)
-{
-		//PF0 = SW2 (negative logic)
-	  //PF1 = Red LED 
-	  //PF2 = Blue LED 
-	  //PF3 = Green LED 
-	  //PF4 = SW1 (negative logic)
+{ 
+	//PF0 = SW2 (negative logic)
+	//PF1 = Red LED 
+	//PF2 = Blue LED 
+	//PF3 = Green LED 
+	//PF4 = SW1 (negative logic)
 
     volatile uint32_t ui32Loop;
 	
-	  //uint32_t = 2^32 - 1.
+     //uint32_t = 2^32 - 1.
 	
     // Enable the clock of the GPIO port that is used for the on-board LED and switch.
     SYSCTL_RCGC2_R = SYSCTL_RCGC2_GPIOF;
-	
 	 
 
     // Do a dummy read to insert a few cycles after enabling the peripheral.
@@ -33,9 +32,9 @@ PortFunctionInit(void)
 
     // Set the direction of PF123 as output
     GPIO_PORTF_DIR_R |= 0x02;   //0010
-		GPIO_PORTF_DIR_R |= 0x01;   //0001
-		GPIO_PORTF_DIR_R |= 0x04;   //0100
-		GPIO_PORTF_DIR_R |= 0x08;   //1000
+    GPIO_PORTF_DIR_R |= 0x01;   //0001
+    GPIO_PORTF_DIR_R |= 0x04;   //0100
+    GPIO_PORTF_DIR_R |= 0x08;   //1000
 	
     // Set the direction of PF0 (SW2) as input by clearing the bit
     GPIO_PORTF_DIR_R &= ~0x01;
@@ -61,13 +60,11 @@ int main(void)
 	//if (GPIO PORTF = XXXX.XXX1)
         if((GPIO_PORTF_DATA_R&0x01)!=0x00) //SW2 is pressed
 				{
-						// Turn off the LED.
-						GPIO_PORTF_DATA_R |= 0x0E;   //0000.1110 14 = E 
-					//original val: 0x02
-						//XXXX.XX1X
+				 	// Turn off the LED.
+				 	GPIO_PORTF_DATA_R |= 0x0E;   //0000.1110 14 = E 
+				
 				}
-				//else (GPIO PORTF = XXXX.XXX0)
-				else 
+	else 
 				{
 						// Turn on the LED.
 						GPIO_PORTF_DATA_R &= ~0x0E;
