@@ -2,20 +2,20 @@
 #include <stdbool.h>
 #include "inc/tm4c123gh6pm.h"
 #include "driverlib/sysctl.h"
-#include <string.h>
-
 
 void
 PortFunctionInit(void)
 { 
-  /*
+  	/*
+	This is a simple 0 to 9 counter using TIVAware, 4511 decoder, and 7-segment display
+
+	Port Connection: 
+	
 	PD0:  4511 Digit 0   
 	PD1:  4511 Digit 1 
 	PD2:  4511 Digit 2
 	PD3:  4511 Digit 3
 	
-	This is a simple 0 to 9 counter using TIVAware, 4511 decoder, and 7-segment display
-  
 	*/
 	
     volatile uint32_t ui32Loop;
@@ -42,7 +42,7 @@ PortFunctionInit(void)
 	
      //Enable pull-up on Port D 
     GPIO_PORTD_PUR_R |= 0x0F; 
-}
+    }
 
 int main(void)
 {
