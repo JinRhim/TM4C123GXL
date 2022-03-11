@@ -81,6 +81,7 @@ SysCtlDelay(2000000).  --> 200000 Loop. Each loop = 3 CPU cycle.
 	 
 	 
 	 
+/*
 
 while (1){
 	for (int i=0;i<1000;i++){
@@ -88,3 +89,5 @@ while (1){
 		SysCrlDelay(5333);
 	}
 }
+
+*/
