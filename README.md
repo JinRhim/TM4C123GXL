@@ -76,3 +76,15 @@ SysCtlDelay(2000000).  --> 200000 Loop. Each loop = 3 CPU cycle.
 	 //PF2 = Blue LED 
 	 //PF3 = Green LED 
 	 //PF4 = SW1 (negative logic)
+	 
+	 //SysCrlDelay(5333333);   --> Delay for 1 seconds 
+	 
+	 
+	 
+
+while (1){
+	for (int i=0;i<1000;i++){
+		if(Data&0x01== 0x00){ //Do something}
+		SysCrlDelay(5333);
+	}
+}
