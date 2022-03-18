@@ -31,8 +31,8 @@ You also need to know how to implement specific delay,
 looping, and if-then
 */
 
-#define secFraction 		100000     //100,000
-#define halfSecFraction  50000     //half of fraction
+#define FRACTION 		5300000     // Divide System Cycle
+#define HALFFRACTION 530000     //half of fraction
 
 void
 PortFunctionInit(void)
@@ -106,29 +106,35 @@ int main(void)
 			int q = 0;
 			
 			
-			 for (int i =0; i < secFraction; i++) {
+			 for (int i =0; i < FRACTION; i++) {
+				 
 				 
 					if((GPIO_PORTF_DATA_R&0x10)!=0x00) {   //SW1 is pressed
-						m = m+1; 
-						if (m > halfSecFraction) {
+						m++;
+						if (m > HALFFRACTION) {
 								toggleBLUE();   //toggle blue
 							  m = 0;
 						}
 					}
 					else {                 //nothing is pressed 
-						n = n+1; 
-						if (n > halfSecFraction) {
-								toggleRED();     //toggle red
+						n++;
+						if (n > HALFFRACTION) {
+								toggleRED();     //toggle red for 0.5 sec 
 							  n = 0;
 						}
 					}
 					
-				  if((GPIO_PORTF_DATA_R&0x01)!=0x00) {
+					if((GPIO_PORTF_DATA_R&0x01)!=0x00) {
 						GPIO_PORTF_DATA_R &=~0x02;
 						GPIO_PORTF_DATA_R &=~0x04;
 					}
 					
-					SysCtlDelay(5333333/secFraction);
+			
+			
+					
+					
+					
+					SysCtlDelay(5300000/FRACTION);
 			 
 
 		}
@@ -145,4 +151,3 @@ void toggleBLUE() {
 	GPIO_PORTF_DATA_R &= ~0x02;  //turn off red
 	GPIO_PORTF_DATA_R ^=0x04;    //turn on blue
 }
-
