@@ -1,3 +1,90 @@
+#include <stdint.h>
+#include <stdbool.h>
+#include "inc/tm4c123gh6pm.h"
+#include "driverlib/sysctl.h"
+
+
+
+void turnOFFALL();
+void toggleRED();
+void toggleBLUE();
+
+
+
+/*
+LAb 6. Develop Your First Project
+
+The system has two input switches (SW1 and SW2) and two output LEDs 
+(blue and red LEDs). 
+
+1) If SW1 is pressed, the red LED will be toggled every half second 
+(the blue LED will be off).
+
+2) If SW1 is not pressed, the blue LED will be toggled every half 
+second (the red LED will be off).
+
+3) Whenever SW2 is pressed (no matter SW1 is pressed or not), both LEDs will be off.
+
+Basically, you need to figure out which IO ports you need to configure, and how to
+configure them. 
+You also need to know how to implement specific delay,
+looping, and if-then
+*/
+
+#define secFraction 		100000     //100,000
+#define halfSecFraction  50000     //half of fraction
+
+void
+PortFunctionInit(void)
+{
+		//PF0 = SW2 (negative logic)
+		//PF1 = Red LED 
+		//PF2 = Blue LED 
+		//PF3 = Green LED 
+		//PF4 = SW1 (negative logic)
+	
+		volatile uint32_t ui32Loop;   
+	
+		// Enable the clock of the GPIO port that is used for the on-board LED and switch.
+    SYSCTL_RCGC2_R = SYSCTL_RCGC2_GPIOF;
+
+    // Do a dummy read to insert a few cycles after enabling the peripheral.
+    ui32Loop = SYSCTL_RCGC2_R;
+
+		// Unlock GPIO Port F
+		GPIO_PORTF_LOCK_R = 0x4C4F434B;
+	
+		// allow changes to PF0 and PF4
+	  //XXX1.XXX1     
+		GPIO_PORTF_CR_R |= 0x01; 
+		GPIO_PORTF_CR_R |= 0x10; 
+
+    // Set the direction of PF1 nad PF2 (RED/Blue as output
+		// XXXX.X11X
+		//Blue and Red LED will be used
+    GPIO_PORTF_DIR_R |= 0x02;
+		GPIO_PORTF_DIR_R |= 0x04;      
+	
+	
+		// Set the direction of PF0 (SW2) as input by clearing the bit
+		// AND 1110.1110
+    GPIO_PORTF_DIR_R &= ~0x11;
+	
+    // Enable both PF0, PF1, PF2, PF4 for digital function.
+		//XXX1.X111
+		GPIO_PORTF_DEN_R |= 0x01; 
+		GPIO_PORTF_DEN_R |= 0x02;
+		GPIO_PORTF_DEN_R |= 0x04;
+		GPIO_PORTF_DEN_R |= 0x10;
+		
+		
+		//Enable pull-up on PF0 and PF4. 
+		//XXX1.XXX1
+		GPIO_PORTF_PUR_R |= 0x01;
+		GPIO_PORTF_PUR_R |= 0x10;
+		
+}
+
 int main(void)
 {
 		//initialize the GPIO ports	
@@ -16,23 +103,31 @@ int main(void)
     {
 			int n = 0;
 			int m = 0;
+			int q = 0;
+			
+			
 			 for (int i =0; i < secFraction; i++) {
-					
-						
-					if((GPIO_PORTF_DATA_R&0x10)!=0x00) {
+				 
+					if((GPIO_PORTF_DATA_R&0x10)!=0x00) {   //SW1 is pressed
 						m = m+1; 
-						if (m > 50000) {
-								toggleBLUE();
+						if (m > halfSecFraction) {
+								toggleBLUE();   //toggle blue
 							  m = 0;
 						}
-					}	
-					else {
+					}
+					else {                 //nothing is pressed 
 						n = n+1; 
-						if (n > 50000) {
-								toggleRED();
+						if (n > halfSecFraction) {
+								toggleRED();     //toggle red
 							  n = 0;
 						}
 					}
+					
+				  if((GPIO_PORTF_DATA_R&0x01)!=0x00) {
+						GPIO_PORTF_DATA_R &=~0x02;
+						GPIO_PORTF_DATA_R &=~0x04;
+					}
+					
 					SysCtlDelay(5333333/secFraction);
 			 
 
@@ -40,3 +135,14 @@ int main(void)
 	
 }
 }
+
+void toggleRED() {
+	GPIO_PORTF_DATA_R &=~0x04;   //turn off blue
+	GPIO_PORTF_DATA_R ^=0x02;    //turn on red
+}
+
+void toggleBLUE() {
+	GPIO_PORTF_DATA_R &= ~0x02;  //turn off red
+	GPIO_PORTF_DATA_R ^=0x04;    //turn on blue
+}
+
