@@ -1,0 +1,42 @@
+int main(void)
+{
+		//initialize the GPIO ports	
+		PortFunctionInit();
+
+    //If nothing is pressed --> blue toggle every 0.5 sec
+	  // SW 1 pressed --> red toggle 0.5 sec 
+	  // SW 2 pressed --> both led off 
+	
+		//PF0 = SW2 (negative logic)   0000.0001 - 0x01
+		//PF1 = Red LED                0000.0010 - 0x02
+		//PF2 = Blue LED               0000.0100 - 0x04
+		//PF3 = Green LED              0000.1000 - 0x08
+		//PF4 = SW1 (negative logic)   0001.0000 - 0x10
+    while(1)
+    {
+			int n = 0;
+			int m = 0;
+			 for (int i =0; i < secFraction; i++) {
+					
+						
+					if((GPIO_PORTF_DATA_R&0x10)!=0x00) {
+						m = m+1; 
+						if (m > 50000) {
+								toggleBLUE();
+							  m = 0;
+						}
+					}	
+					else {
+						n = n+1; 
+						if (n > 50000) {
+								toggleRED();
+							  n = 0;
+						}
+					}
+					SysCtlDelay(5333333/secFraction);
+			 
+
+		}
+	
+}
+}
