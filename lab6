@@ -1,0 +1,125 @@
+#include <stdint.h>
+#include "inc/tm4c123gh6pm.h"
+#include "driverlib/sysctl.h"
+
+
+/*
+LAb 6. Develop Your First Project
+
+The system has two input switches (SW1 and SW2) and two output LEDs 
+(blue and red LEDs). 
+
+1) If SW1 is pressed, the red LED will be toggled every half second 
+(the blue LED will be off).
+
+2) If SW1 is not pressed, the blue LED will be toggled every half 
+second (the red LED will be off).
+
+3) Whenever SW2 is pressed (no matter SW1 is pressed or not), both LEDs will be off.
+
+Basically, you need to figure out which IO ports you need to configure, and how to
+configure them. 
+You also need to know how to implement specific delay,
+looping, and if-then
+*/
+
+#define secFraction 		100000
+
+
+void
+PortFunctionInit(void)
+{
+		//PF0 = SW2 (negative logic)
+		//PF1 = Red LED 
+		//PF2 = Blue LED 
+		//PF3 = Green LED 
+		//PF4 = SW1 (negative logic)
+	
+		volatile uint32_t ui32Loop;   
+	
+		// Enable the clock of the GPIO port that is used for the on-board LED and switch.
+    SYSCTL_RCGC2_R = SYSCTL_RCGC2_GPIOF;
+
+    // Do a dummy read to insert a few cycles after enabling the peripheral.
+    ui32Loop = SYSCTL_RCGC2_R;
+
+		// Unlock GPIO Port F
+		GPIO_PORTF_LOCK_R = 0x4C4F434B;
+	
+		// allow changes to PF0 and PF4
+	  //XXX1.XXX1     
+		GPIO_PORTF_CR_R |= 0x11; 
+
+    // Set the direction of PF2 (blue LED) as output
+		// XXXX.X11X
+		//Blue and Red LED will be used
+    GPIO_PORTF_DIR_R |= 0x02;
+		GPIO_PORTF_DIR_R |= 0x04;      
+	
+	
+		// Set the direction of PF0 (SW2) as input by clearing the bit
+		// AND 1110.1110
+    GPIO_PORTF_DIR_R &= ~0x11;
+	
+    // Enable both PF0, PF1, PF2, PF4 for digital function.
+		//XXX1.X111
+    GPIO_PORTF_DEN_R |= 0x17;
+		
+		//Enable pull-up on PF0 and PF4. 
+		//XXX1.XXX1
+		GPIO_PORTF_PUR_R |= 0x11;
+}
+
+int main(void)
+{
+		//initialize the GPIO ports	
+		PortFunctionInit();
+
+    // Loop forever.
+    while(1)
+    {
+				if ((GPIO_PORTF_DATA_R&0x10)!= 0x00) //SW1 is pressed 
+				{		//Turn off Blue LED first
+						GPIO_PORTF_DATA_R &= ~0x04;
+						//RED LED Will be toggled every half seconds 
+						//XOR with XXXX.XXX1 to toggle
+			
+						GPIO_PORTF_DATA_R ^= 0x02; 
+						for (int i =0; i < secFraction; i++) {
+							
+								if((GPIO_PORTF_DATA_R&0x01)!=0x00) {
+									//if SW2 is pressed 
+									//it will turn off all of the LED.
+									GPIO_PORTF_DATA_R &= 0x06;
+								}
+								else {
+									//if SW2 is not pressed, delay for 1sec/secFraction seconds.
+									SysCtlDelay(5333333/secFraction);
+								}
+						}
+				}
+			
+				//if (GPIO PORTF = XXXX.XXX1)
+        else if((GPIO_PORTF_DATA_R&0x01)!=0x00) //SW2 is pressed
+				{
+						// Turn off all the LED.
+					  // Turn off all the PF1 and PF2
+						// XXXX.X11X.
+						GPIO_PORTF_DATA_R &= 0x06;
+				}
+				
+				//else (GPIO PORTF = XXXX.XXX0)
+				else 
+				{
+						//If nothing os pressed, blue LED will be toggled every 0.5 sec
+						//Red LED will be turned off
+						// AND XXXX.XX0X --> turn off PF1 Red LED
+						GPIO_PORTF_DATA_R &= ~0x02;
+					
+					
+						//Toggle PF2 --> Blue Light
+						GPIO_PORTF_DATA_R ^= 0x04;
+				
+				}
+    }
+}

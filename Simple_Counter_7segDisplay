@@ -1,0 +1,91 @@
+#include <stdint.h>
+#include <stdbool.h>
+#include "inc/tm4c123gh6pm.h"
+#include "driverlib/sysctl.h"
+
+void
+PortFunctionInit(void)
+{ 
+  	/*
+	This is a simple 0 to 9 counter using TIVAware, 4511 decoder, and 7-segment display
+
+	Port Connection: 
+	
+	PD0:  4511 Digit 0   
+	PD1:  4511 Digit 1 
+	PD2:  4511 Digit 2
+	PD3:  4511 Digit 3
+	
+	*/
+	
+    volatile uint32_t ui32Loop;
+	
+    //uint32_t = 2^32 - 1.
+    // Enable the clock of the GPIO port that is used for the on-board LED and switch.
+    SYSCTL_RCGC2_R = SYSCTL_RCGC2_GPIOD;
+	 
+    // Do a dummy read to insert a few cycles after enabling the peripheral.
+    ui32Loop = SYSCTL_RCGC2_R;
+
+     // Unlock GPIO Port D
+		GPIO_PORTD_LOCK_R = 0x4C4F434B; 
+	
+    // allow changes to Port D 
+    GPIO_PORTD_CR_R |= 0x0F;      
+
+		//Direction of output Port D = 1.  
+		// 0000.1111 for PD0123
+		GPIO_PORTD_DIR_R |= 0x0F;    //0000.1111
+	
+    //Enable Port D for digital function
+    GPIO_PORTD_DEN_R |= 0x0F;   //0000.1111
+	
+     //Enable pull-up on Port D 
+    GPIO_PORTD_PUR_R |= 0x0F; 
+    }
+
+int main(void)
+{
+     //initialize the GPIO ports	 
+     PortFunctionInit();
+	
+    while(1)
+    {	
+		
+		GPIO_PORTD_DATA_R &= 0x00; 
+		SysCtlDelay(2000000); 
+		GPIO_PORTD_DATA_R |= 0x01;
+		SysCtlDelay(2000000);
+		GPIO_PORTD_DATA_R &= 0x00; 
+		GPIO_PORTD_DATA_R |= 0x02;
+		SysCtlDelay(2000000);
+		GPIO_PORTD_DATA_R &= 0x00; 
+		GPIO_PORTD_DATA_R |= 0x03;
+		SysCtlDelay(2000000);
+		GPIO_PORTD_DATA_R &= 0x00; 
+		GPIO_PORTD_DATA_R |= 0x04;
+		SysCtlDelay(2000000);
+		GPIO_PORTD_DATA_R &= 0x00; 
+		GPIO_PORTD_DATA_R |= 0x05;
+		SysCtlDelay(2000000);
+		GPIO_PORTD_DATA_R &= 0x00; 
+		GPIO_PORTD_DATA_R |= 0x06;
+		SysCtlDelay(2000000);
+		GPIO_PORTD_DATA_R &= 0x00; 
+		GPIO_PORTD_DATA_R |= 0x07;
+		SysCtlDelay(2000000);
+		GPIO_PORTD_DATA_R &= 0x00; 
+		GPIO_PORTD_DATA_R |= 0x08;
+		SysCtlDelay(2000000);
+		GPIO_PORTD_DATA_R &= 0x00; 
+		GPIO_PORTD_DATA_R |= 0x09;
+		SysCtlDelay(2000000);
+		
+			
+
+    }
+}
+
+
+
+
