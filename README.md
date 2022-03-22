@@ -24,6 +24,18 @@
 ### 6. Digital Enable Register (DEN) - Enable Digital Input/Output
 
 
+1. RCGC2 (Run Mode Clock Gating Control Register 2) - enable clock for specific port. 
+
+2. Lock Register - unlock port 
+
+3. CR (Commit REgister) - set 1: receive data 
+
+4. DIR (Data Direction Register) - input(0)/output(1)
+
+5. PUR (Pull Up Register) - (There is also PDR: Pull down register)
+    1. IF device is not connected to anything --> neither low nor high 
+
+6. DEN (Digital Enable Register)
 
 
 
