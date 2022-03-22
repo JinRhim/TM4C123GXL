@@ -1,3 +1,5 @@
+### Basic Functions 
+
 1. RCGC2 (Run Mode Clock Gating Control Register 2) - enable clock for specific port. 
 
 2. Lock Register - unlock port 
@@ -14,42 +16,59 @@
 
 
 
-1. Enable Port F Clock 
+### PortFunctionInit() for Port F
 
-SYSCTL_RCGC2_R = SYSCTL_RCGC2_GPIOF 
+'''
+volatile uint32_t ui32Loop/ 
 
-+ Dummy cycle for clock 
+SYSCTL_RCGC2_R = SYSCTL_RCGC2_GPIOF;
 
-ui32Loop = SYSCTL_RCGC2_R 
+ui32Loop = SYSCTL_RCGC2_R;
 
-2. Unlock GPIO Port F 
+GPIO_PORTF_LOCK_R = 0x4C4F434B;
 
-GPIO_PORTF_LOCK_R = 0x4C4F434B
+GPIO_PORTF_CR_R |= 0x01; 
+GPIO_PORTF_CR_R |= 0x10; 
 
-3. Change Commit Register
+GPIO_PORTF_DIR_R |= 0x02;
+GPIO_PORTF_DIR_R |= 0x04;      
+	
+GPIO_PORTF_DIR_R &= ~0x11;  //AND 1110.1110. Clear PF0 and PF4 to set direction
 
-GPIO_PORTF_CR_R |= 0x01             //allow change to PF0 
+GPIO_PORTF_DEN_R |= 0x01; 
+GPIO_PORTF_DEN_R |= 0x02;
+GPIO_PORTF_DEN_R |= 0x04;
+GPIO_PORTF_DEN_R |= 0x10;
+		
 
-4. Direction (DIR) Register - Set PF2 to output
-
-GPIO_PORTF_DIR_R |= 0x04.           //0x0000.0100 --> PF2:1  PF1:0 PF0:0 
-
-5. Enable PF2 for digital function 
-
-GPIO_PORTF_DEN_R |= 0x04 
-
-6. Enable Pull-up on PF0 
-
-GPI0_PORTF_PUR_R |= 0x04.          //0x0000.0100 --> enable pull up. 
-
-
-
+GPIO_PORTF_PUR_R |= 0x01;
+GPIO_PORTF_PUR_R |= 0x10;
+'''
 
 
-##Delay Function 
+### Other Functions 
 
-#include "driverlib/sysctl.h"
-SysCtlDelay(2000000).  --> 200000 Loop. Each loop = 3 CPU cycle. 
+1. Delay 
+    1. #include "driverlib/sysctl.h"
+    2. SysCtlDelay(5333333) 
+    3. Default Clock = 16 MHz. SysCtlDelay(1) = 3 cycle.  
+    4. Thus, 1 seconds = SysCtlDelay(16 Million/3)
+
+2. Switch Function 
+    1. IF SW1 is pressed --> if((GPIO_PORTF_DATA_R&0x10)!=0x00)
+    2. IF SW2 is pressed --> if((GPIO_PORTF_DATA_R&0x01)!=0x00)
+
+3. Pseudo-Interrupt mimic code 
+'''
+while (1){
+ 	for (int i=0;i<1000;i++){
+ 		if(SW1 == pressed){ }
+ 		SysCrlDelay(5333);
+		else {} 
+		if (SW2 == pressed) { }
+ 	}
+}
+'''
 
 
 PORTF  | Function
@@ -63,22 +82,4 @@ PF4  | SW1 (negative logic)
 
 
 
-
-	 //PF0 = SW2 (negative logic)
-	 //PF1 = Red LED 
-	 //PF2 = Blue LED 
-	 //PF3 = Green LED 
-	 //PF4 = SW1 (negative logic)
-	 
-	 //SysCrlDelay(5333333);   --> Delay for 1 seconds 
-	 
-	 
-	 
-
-// while (1){
-// 	for (int i=0;i<1000;i++){
-// 		if(Data&0x01== 0x00){ //Do something}
-// 		SysCrlDelay(5333);
-// 	}
-// }
 
