@@ -68,6 +68,15 @@ GPI0_PORTF_PUR_R |= 0x04.          //0x0000.0100 --> enable pull up.
 SysCtlDelay(2000000).  --> 200000 Loop. Each loop = 3 CPU cycle. 
 
 
+PORTF  | Function
+------------- | -------------
+PF0  | SW2 (negative logic)
+PF1  | RED LED
+PF2  | BLUE LED
+PF3  | GREEN LED
+PF4  | SW1 (negative logic)
+
+
 
 
 
