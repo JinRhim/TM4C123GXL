@@ -17,8 +17,8 @@
 
 
 ### PortFunctionInit() for Port F
+```
 
-'''
 volatile uint32_t ui32Loop/ 
 
 SYSCTL_RCGC2_R = SYSCTL_RCGC2_GPIOF;
@@ -43,7 +43,7 @@ GPIO_PORTF_DEN_R |= 0x10;
 
 GPIO_PORTF_PUR_R |= 0x01;
 GPIO_PORTF_PUR_R |= 0x10;
-'''
+```
 
 
 ### Other Functions 
@@ -54,12 +54,14 @@ GPIO_PORTF_PUR_R |= 0x10;
     3. Default Clock = 16 MHz. SysCtlDelay(1) = 3 cycle.  
     4. Thus, 1 seconds = SysCtlDelay(16 Million/3)
 
+
 2. Switch Function 
     1. IF SW1 is pressed --> if((GPIO_PORTF_DATA_R&0x10)!=0x00)
     2. IF SW2 is pressed --> if((GPIO_PORTF_DATA_R&0x01)!=0x00)
 
+
 3. Pseudo-Interrupt mimic code 
-'''
+```
 while (1){
  	for (int i=0;i<1000;i++){
  		if(SW1 == pressed){ }
@@ -68,7 +70,7 @@ while (1){
 		if (SW2 == pressed) { }
  	}
 }
-'''
+```
 
 
 PORTF  | Function
