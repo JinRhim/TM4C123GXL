@@ -84,7 +84,74 @@ PF2  | BLUE LED
 PF3  | GREEN LED
 PF4  | SW1 (negative logic)
 
+Negative Logic  | Positive Logic
+------------- | -------------
+Pressed: 0V F | Pressed: 3.3v T 
+Not Pressed: 3.3v T | Not Pressed: 0v F
 
+
+
+### Clock Generation 
+1. Clock Generator 
+  1. Precision Internal OScillator (PIOSC) - 16 MHz default 
+  2. Main OScillator (MOSC) - 5 ~ 25 MHz
+  3. Low Frequency Interal OScillator (LFIOSC) - 30KHz Deep Sleep Mode
+  4. Hibernate Module Clock Source - 32.768 KHz Hibernate mode
+ 
+2. System Clock = always comes from 400 MHz source.   
+System Clock = 400 MHz/2/SYSCTL_SYSDIV_(Number)  
+ 
+3. Code
+ 
+```
+
+SysCtlClockSet(SYSCTL_SYSDIV_5 | SYSCTL_USE_PLL | SYSCTL_XTAL_16MHZ | SYSCTL_OSC_MAIN);
+//Clock = 400/2/5 --> 40 MHz
+
+uint32_t ui32SysClkFreq; 
+
+SysCtlClockSet(SYSCTL_SYSDIV_10|SYSCTL_USE_PLL|SYSCTL_XTAL_16MHZ|SYSCTL_OSC_MAIN);
+//Clock = 400/2/10 --> 20MHz
+
+ui32SysClkFreq = SysCtlClockGet( );
+
+Clock = SysCtlClockGet();     //get the processor clock rate
+
+```
+
+### Bit-specific addressing
+
+ADdress | Name
+------------- | -------------
+$400F.E108  | SYSCTL_RCGC2_R
+$4000.4000. | PORTA base address
+$4000.5000. | PORTB base address
+$4000.6000. | PORTC base address
+$4000.7000. | PORTD base address
+$4002.4000. | PORTE base address
+$4002.5000. | PORTF base address
+base+$3FC | GPIO_PORTx_DATA_R 
+base+$400 | GPIO_PORTx_DIR_R 
+base+$420 | GPIO_PORTx_AFSEL_R 
+base+$510 | GPIO_PORTx_PUR_R 
+base+$51C | GPIO_PORTx_DEN_R 
+base+$524 | GPIO_PORTx_CR_R 
+base+$528 | GPIO_PORTx_AMSEL_R 
+
+1. Read/Write 32bit value directly 
+
+```
+#define GPIO_PORTF_DATA_R (*((volatile unsigned long *) 0x400253FC))
+
+unsigned long PortF_Input(void){
+	return (GPIO_PORTF_DATA_R); // read Port F
+}
+
+void PortF_Output(unsigned long data){ // write Port F 
+	GPIO_PORTF_DATA_R = data;
+}
+
+```
 
 
 
