@@ -62,14 +62,17 @@ GPIO_PORTF_PUR_R |= 0x10;
 
 3. Pseudo-Interrupt mimic code 
 ```
+
 while (1){
  	for (int i=0;i<1000;i++){
  		if(SW1 == pressed){ }
- 		SysCrlDelay(5333);
 		else {} 
 		if (SW2 == pressed) { }
+		
+		SysCtlDelay(5333333/1000)
  	}
 }
+
 ```
 
 
