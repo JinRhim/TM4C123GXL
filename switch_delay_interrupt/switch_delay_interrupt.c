@@ -73,8 +73,8 @@ void GPIOPortF_Handler(void){
    
    else
 	{
-			// Turn off the LED.
-			GPIO_PORTF_DATA_R &= ~0x04;
+	// Turn off the LED.
+	GPIO_PORTF_DATA_R &= ~0x04;
 	}
 }
 
