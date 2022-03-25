@@ -20,36 +20,39 @@ void
 PortFunctionInit(void)
 {
 
-    volatile uint32_t ui32Loop;   
-
+		volatile uint32_t ui32Loop;   
+	
+		// Enable the clock of the GPIO port that is used for the on-board LED and switch.
     SYSCTL_RCGC2_R = SYSCTL_RCGC2_GPIOF;
+
+    //
+    // Do a dummy read to insert a few cycles after enabling the peripheral.
+    //
     ui32Loop = SYSCTL_RCGC2_R;
 
-    // Unlock GPIO Port F
-    GPIO_PORTF_LOCK_R = 0x4C4F434B;   
-    GPIO_PORTF_CR_R |= 0x01;           // allow changes to PF0
+		// Unlock GPIO Port F
+		GPIO_PORTF_LOCK_R = 0x4C4F434B;   
+		GPIO_PORTF_CR_R |= 0x01;           // allow changes to PF0
 
 	
-    // Set the direction of PF4 (SW1) and PF0 (SW2) as input by clearing the bit
+		// Set the direction of PF4 (SW1) and PF0 (SW2) as input by clearing the bit
     GPIO_PORTF_DIR_R &= ~0x11;
 	
     // Enable PF4, and PF0 for digital function.
     GPIO_PORTF_DEN_R |= 0x11;
 	
-    //Enable pull-up on PF4 and PF0
-    GPIO_PORTF_PUR_R |= 0x11; 
+		//Enable pull-up on PF4 and PF0
+		GPIO_PORTF_PUR_R |= 0x11; 
 
 }
 
 //Globally enable interrupts 
-
 void IntGlobalEnable(void)
 {
     __asm("    cpsie   i\n");
 }
 
 //Globally disable interrupts 
-
 void IntGlobalDisable(void)
 {
     __asm("    cpsid   i\n");
@@ -59,12 +62,12 @@ void
 Interrupt_Init(void)
 {
   NVIC_EN0_R |= 0x40000000;  		// enable interrupt 30 in NVIC (GPIOF)
-  NVIC_PRI7_R &= 0x00E00000; 		// configure GPIOF interrupt priority as 0
-  GPIO_PORTF_IM_R |= 0x11;   		// arm interrupt on PF0 and PF4
-  GPIO_PORTF_IS_R &= ~0x11;     // PF0 and PF4 are edge-sensitive
+	NVIC_PRI7_R &= 0x00E00000; 		// configure GPIOF interrupt priority as 0
+	GPIO_PORTF_IM_R |= 0x11;   		// arm interrupt on PF0 and PF4
+	GPIO_PORTF_IS_R &= ~0x11;     // PF0 and PF4 are edge-sensitive
   GPIO_PORTF_IBE_R &= ~0x11;   	// PF0 and PF4 not both edges trigger 
   GPIO_PORTF_IEV_R &= ~0x11;  	// PF0 and PF4 falling edge event
-  IntGlobalEnable();        		// globally enable interrupt
+	IntGlobalEnable();        		// globally enable interrupt
 }
 
 //interrupt handler
@@ -81,7 +84,7 @@ void GPIOPortF_Handler(void)
 	}
 	
 	//SW2 is pressed
- 	if(GPIO_PORTF_RIS_R&0x01)
+  if(GPIO_PORTF_RIS_R&0x01)
 	{
 		// acknowledge flag for PF0
 		GPIO_PORTF_ICR_R |= 0x01; 
@@ -95,11 +98,11 @@ void GPIOPortF_Handler(void)
 int main(void)
 {
 	
-      //initialize the GPIO ports	
-      PortFunctionInit();
+		//initialize the GPIO ports	
+		PortFunctionInit();
 		
-     //configure the GPIOF interrupt
-     Interrupt_Init();
+	//configure the GPIOF interrupt
+		Interrupt_Init();
 	
     //
     // Loop forever.

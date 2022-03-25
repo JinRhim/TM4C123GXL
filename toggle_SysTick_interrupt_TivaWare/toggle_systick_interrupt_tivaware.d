@@ -1,0 +1,13 @@
+.\toggle_systick_interrupt_tivaware.o: toggle_SysTick_interrupt_TivaWare.c
+.\toggle_systick_interrupt_tivaware.o: C:\Keil\ARM\ARMCC\bin\..\include\stdint.h
+.\toggle_systick_interrupt_tivaware.o: C:\Keil\ARM\ARMCC\bin\..\include\stdbool.h
+.\toggle_systick_interrupt_tivaware.o: toggle_SysTick_interrupt_TivaWare.h
+.\toggle_systick_interrupt_tivaware.o: ..\..\..\..\inc/hw_types.h
+.\toggle_systick_interrupt_tivaware.o: ..\..\..\..\inc/hw_memmap.h
+.\toggle_systick_interrupt_tivaware.o: ..\..\..\..\inc/hw_gpio.h
+.\toggle_systick_interrupt_tivaware.o: ..\..\..\..\driverlib/sysctl.h
+.\toggle_systick_interrupt_tivaware.o: ..\..\..\..\driverlib/pin_map.h
+.\toggle_systick_interrupt_tivaware.o: ..\..\..\..\driverlib/gpio.h
+.\toggle_systick_interrupt_tivaware.o: ..\..\..\..\driverlib/systick.h
+.\toggle_systick_interrupt_tivaware.o: ..\..\..\..\driverlib/interrupt.h
+.\toggle_systick_interrupt_tivaware.o: ..\..\..\..\inc/tm4c123gh6pm.h

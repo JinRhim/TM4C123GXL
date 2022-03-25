@@ -1,0 +1,75 @@
+Dependencies for Project 'IMU2', Target 'Target 1': (DO NOT MODIFY !)
+F (.\startup_rvmdk.S)(0x5FC360DD)(--cpu Cortex-M4.fp --pd "__EVAL SETA 1" -g --apcs=interwork -IC:\Keil_v5\ARM\RV31\INC-IC:\Keil_v5\ARM\CMSIS\Include-IC:\Keil_v5\ARM\INC\TI\TM4C123--pd "__UVISION_VERSION SETA 526"--list .\listings\startup_rvmdk.lst --xref -o .\objects\startup_rvmdk.o --depend .\objects\startup_rvmdk.d)
+F (..\..\..\..\driverlib\rvmdk\driverlib.lib)(0x5BE5EF09)()
+F (.\IMU2.c)(0x5FC36E0F)(--c99 -c --cpu Cortex-M4.fp -D__EVAL -g -O0 --apcs=interwork -I ..\..\..\.. --c99-IC:\Keil_v5\ARM\RV31\INC-IC:\Keil_v5\ARM\CMSIS\Include-IC:\Keil_v5\ARM\INC\TI\TM4C123-D__UVISION_VERSION="526" -Drvmdk -DPART_TM4C123GH6PM -DTM4C123GH6PM-o .\objects\imu2.o --omf_browse .\objects\imu2.crf --depend .\objects\imu2.d)
+I (IMU2.h)(0x5D1D151B)
+I (MPU9250.h)(0x5D1D151B)
+I (I2C1_Functions.h)(0x5D1D151B)
+I (C:\Keil_v5\ARM\ARMCC\include\stdio.h)(0x599FBC3C)
+I (C:\Keil_v5\ARM\ARMCC\include\stdarg.h)(0x599FBC3A)
+I (C:\Keil_v5\ARM\ARMCC\include\stdint.h)(0x599FBC3E)
+I (C:\Keil_v5\ARM\ARMCC\include\stdbool.h)(0x599FBC3E)
+I (..\..\..\..\driverlib/i2c.h)(0x5BE5EF09)
+I (..\..\..\..\inc/hw_i2c.h)(0x5BE5EF0C)
+I (..\..\..\..\driverlib/sysctl.h)(0x5BE5EF09)
+I (C:\Keil_v5\ARM\ARMCC\include\math.h)(0x599FBC3E)
+I (..\..\..\..\inc/hw_types.h)(0x5BE5EF0C)
+I (..\..\..\..\inc/hw_memmap.h)(0x5BE5EF0C)
+I (..\..\..\..\inc/hw_gpio.h)(0x5BE5EF0C)
+I (..\..\..\..\inc/hw_ints.h)(0x5BE5EF0C)
+I (..\..\..\..\driverlib/pin_map.h)(0x5BE5EF09)
+I (..\..\..\..\driverlib/gpio.h)(0x5BE5EF09)
+I (..\..\..\..\driverlib/interrupt.h)(0x5BE5EF09)
+I (..\..\..\..\driverlib/uart.h)(0x5BE5EF09)
+I (..\..\..\..\driverlib/timer.h)(0x5BE5EF09)
+I (C:\Keil_v5\ARM\ARMCC\include\time.h)(0x599FBC3E)
+I (C:\Keil_v5\ARM\ARMCC\include\string.h)(0x599FBC3C)
+I (C:\Keil_v5\ARM\ARMCC\include\ctype.h)(0x599FBC3E)
+F (.\IMU2.h)(0x5D1D151B)()
+F (.\MPU9250.h)(0x5D1D151B)()
+F (.\I2C1_Functions.h)(0x5D1D151B)()
+F (.\MPU9250.c)(0x5D1D151B)(--c99 -c --cpu Cortex-M4.fp -D__EVAL -g -O0 --apcs=interwork -I ..\..\..\.. --c99-IC:\Keil_v5\ARM\RV31\INC-IC:\Keil_v5\ARM\CMSIS\Include-IC:\Keil_v5\ARM\INC\TI\TM4C123-D__UVISION_VERSION="526" -Drvmdk -DPART_TM4C123GH6PM -DTM4C123GH6PM-o .\objects\mpu9250.o --omf_browse .\objects\mpu9250.crf --depend .\objects\mpu9250.d)
+I (MPU9250.h)(0x5D1D151B)
+I (I2C1_Functions.h)(0x5D1D151B)
+I (C:\Keil_v5\ARM\ARMCC\include\stdio.h)(0x599FBC3C)
+I (C:\Keil_v5\ARM\ARMCC\include\stdarg.h)(0x599FBC3A)
+I (C:\Keil_v5\ARM\ARMCC\include\stdint.h)(0x599FBC3E)
+I (C:\Keil_v5\ARM\ARMCC\include\stdbool.h)(0x599FBC3E)
+I (..\..\..\..\driverlib/i2c.h)(0x5BE5EF09)
+I (..\..\..\..\inc/hw_i2c.h)(0x5BE5EF0C)
+I (..\..\..\..\driverlib/sysctl.h)(0x5BE5EF09)
+I (C:\Keil_v5\ARM\ARMCC\include\math.h)(0x599FBC3E)
+I (..\..\..\..\inc/hw_types.h)(0x5BE5EF0C)
+I (..\..\..\..\inc/hw_memmap.h)(0x5BE5EF0C)
+I (..\..\..\..\inc/hw_gpio.h)(0x5BE5EF0C)
+I (..\..\..\..\inc/hw_ints.h)(0x5BE5EF0C)
+I (..\..\..\..\driverlib/pin_map.h)(0x5BE5EF09)
+I (..\..\..\..\driverlib/gpio.h)(0x5BE5EF09)
+I (..\..\..\..\driverlib/interrupt.h)(0x5BE5EF09)
+I (..\..\..\..\driverlib/uart.h)(0x5BE5EF09)
+I (..\..\..\..\driverlib/timer.h)(0x5BE5EF09)
+I (C:\Keil_v5\ARM\ARMCC\include\time.h)(0x599FBC3E)
+I (C:\Keil_v5\ARM\ARMCC\include\string.h)(0x599FBC3C)
+I (C:\Keil_v5\ARM\ARMCC\include\ctype.h)(0x599FBC3E)
+F (.\I2C1 Functions.c)(0x5D1D151B)(--c99 -c --cpu Cortex-M4.fp -D__EVAL -g -O0 --apcs=interwork -I ..\..\..\.. --c99-IC:\Keil_v5\ARM\RV31\INC-IC:\Keil_v5\ARM\CMSIS\Include-IC:\Keil_v5\ARM\INC\TI\TM4C123-D__UVISION_VERSION="526" -Drvmdk -DPART_TM4C123GH6PM -DTM4C123GH6PM-o ".\objects\i2c1 functions.o" --omf_browse ".\objects\i2c1 functions.crf" --depend ".\objects\i2c1 functions.d")
+I (I2C1_Functions.h)(0x5D1D151B)
+I (C:\Keil_v5\ARM\ARMCC\include\stdio.h)(0x599FBC3C)
+I (C:\Keil_v5\ARM\ARMCC\include\stdarg.h)(0x599FBC3A)
+I (C:\Keil_v5\ARM\ARMCC\include\stdint.h)(0x599FBC3E)
+I (C:\Keil_v5\ARM\ARMCC\include\stdbool.h)(0x599FBC3E)
+I (..\..\..\..\driverlib/i2c.h)(0x5BE5EF09)
+I (..\..\..\..\inc/hw_i2c.h)(0x5BE5EF0C)
+I (..\..\..\..\driverlib/sysctl.h)(0x5BE5EF09)
+I (C:\Keil_v5\ARM\ARMCC\include\math.h)(0x599FBC3E)
+I (..\..\..\..\inc/hw_types.h)(0x5BE5EF0C)
+I (..\..\..\..\inc/hw_memmap.h)(0x5BE5EF0C)
+I (..\..\..\..\inc/hw_gpio.h)(0x5BE5EF0C)
+I (..\..\..\..\inc/hw_ints.h)(0x5BE5EF0C)
+I (..\..\..\..\driverlib/pin_map.h)(0x5BE5EF09)
+I (..\..\..\..\driverlib/gpio.h)(0x5BE5EF09)
+I (..\..\..\..\driverlib/interrupt.h)(0x5BE5EF09)
+I (..\..\..\..\driverlib/uart.h)(0x5BE5EF09)
+I (..\..\..\..\driverlib/timer.h)(0x5BE5EF09)
+I (C:\Keil_v5\ARM\ARMCC\include\time.h)(0x599FBC3E)
+I (C:\Keil_v5\ARM\ARMCC\include\string.h)(0x599FBC3C)
+I (C:\Keil_v5\ARM\ARMCC\include\ctype.h)(0x599FBC3E)
