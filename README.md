@@ -1,3 +1,17 @@
+### Basic Ports 
+
+Ports | Function
+------------- | -------------
+PA2 ~ PA7  | PA6: I2C1SCL / PA7: I2C1SDA 
+PB0 ~ PB7  | PB2: I2C0SCL / PB3: I2C0SDA
+PC4 ~ PC6  | 
+PD0 ~ PD7  | PD0: I2C3SCL / PD1: I2C3SDA
+PE0 ~ PE1  | PE4: I2C2SCL / PE5: I2CSDA
+PF0 ~ PF4  | PF0: SW2 / PF4: SW1
+
+
+
+
 ### Basic Functions 
 
 1. RCGC2 (Run Mode Clock Gating Control Register 2) - enable clock for specific port. 
@@ -121,7 +135,7 @@ Clock = SysCtlClockGet();     //get the processor clock rate
 
 ### Bit-specific addressing
 
-ADdress | Name
+Address | Name
 ------------- | -------------
 $400F.E108  | SYSCTL_RCGC2_R
 $4000.4000. | PORTA base address
