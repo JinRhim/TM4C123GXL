@@ -70,8 +70,8 @@ GPIO_PORTF_PUR_R |= 0x10;
 
 
 2. Switch Function 
-    1. IF SW1 is pressed --> if((GPIO_PORTF_DATA_R&0x10)!=0x00)
-    2. IF SW2 is pressed --> if((GPIO_PORTF_DATA_R&0x01)!=0x00)
+    1. IF SW1 is pressed --> if((GPIO_PORTF_DATA_R&0x10)==0x00)
+    2. IF SW2 is pressed --> if((GPIO_PORTF_DATA_R&0x01)==0x00)
 
 
 3. Pseudo-Interrupt mimic code 
