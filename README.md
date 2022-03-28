@@ -168,4 +168,35 @@ void PortF_Output(unsigned long data){ // write Port F
 ```
 
 
+## I2C Communication 
+
+<img width="379" alt="image" src="https://user-images.githubusercontent.com/93160540/160469132-3dc94af1-d5a4-4bde-a460-f1612df81139.png">
+
+To generate a single transmit cycle,
+
+1. I2CMSA (I2C Master Slave Address) --> written with desireded address. 
+2. R/S bit is cleared. 
+3. Control Register is written with ACK = X (0 or 1) --> to perform operation and stop 
+     1. STOP = 1 
+     2. START = 1 
+     3. RUN = 1
+  
+After the operation is complete 
+1. Interrupt pin = active.  
+2. I2CMDR (I2C Master Data) records data. (Data can be read from here)
+
+
+Data Format with 7-bit address
+1. After START condition --> slave address is transmitted.  
+2. Address is 
+     1. 7-bit long
+     2. 8th bit --> data direction bit (R/S bit in the I2CMSA register)
+- R/S bit: 0 --> SEND 
+3. Master: send STOP condition. --> Data transfer termination
+<img width="559" alt="image" src="https://user-images.githubusercontent.com/93160540/160470244-b6eb2c6f-f8c8-4443-bf1f-45f289a3ca32.png">
+
+4. Steops of MAster Single Transmit
+
+<img width="376" alt="image" src="https://user-images.githubusercontent.com/93160540/160470705-c40370cc-6efd-49b7-a992-8c8ecc323b99.png">
+
 
