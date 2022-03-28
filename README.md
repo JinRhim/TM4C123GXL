@@ -200,3 +200,81 @@ Data Format with 7-bit address
 <img width="376" alt="image" src="https://user-images.githubusercontent.com/93160540/160470705-c40370cc-6efd-49b7-a992-8c8ecc323b99.png">
 
 
+## I2C API 
+
+Starting Functions
+
+Functions | Operation
+------------- | -------------
+I2CMasterInitExpClk()  | set bus speed / enable master module 
+I2CMasterSlaveAddrSet() | define whether send/receive.
+I2CMasterBusBusy() | If the Bus have multiple master --> unlikely to use this function 
+I2CMasterDataPut() | trying to send data...
+I2CMasterControl() | transaction initiation with following commands... 
+
+- I2C_Master_CMD_SINGLE_SEND 
+- I2C_MASTER_CMD_SINGLE_RECEIVE
+- I2C_Master_CMD_BURST_SEND_START 
+- I@C_MASTER_CMD_BURST_RECEIVE_START
+
+
+I2CMasterBusy() | indicate whether I2C master is busy or not. 
+I2CMasterErr() | check data error 
+I2CMasterDataGet() | If no error --> Data has been sent or ready to be read.
+
+Functions 
+
+uint32_t I2CFIFODataGet (uint32_t ui32Base)
+uint32_t I2CFIFODataGetNonBlocking (uint32_t ui32Base, uint8_t ∗pui8Data)
+void I2CFIFODataPut (uint32_t ui32Base, uint8_t ui8Data)
+uint32_t I2CFIFODataPutNonBlocking (uint32_t ui32Base, uint8_t ui8Data)
+uint32_t I2CFIFOStatus (uint32_t ui32Base)
+void I2CIntRegister (uint32_t ui32Base, void (∗pfnHandler)(void))
+void I2CIntUnregister (uint32_t ui32Base)
+uint32_t I2CMasterBurstCountGet (uint32_t ui32Base)
+void I2CMasterBurstLengthSet (uint32_t ui32Base, uint8_t ui8Length)
+bool I2CMasterBusBusy (uint32_t ui32Base)
+bool I2CMasterBusy (uint32_t ui32Base)
+void I2CMasterControl (uint32_t ui32Base, uint32_t ui32Cmd)
+uint32_t I2CMasterDataGet (uint32_t ui32Base)
+void I2CMasterDataPut (uint32_t ui32Base, uint8_t ui8Data)
+void I2CMasterDisable (uint32_t ui32Base)
+void I2CMasterEnable (uint32_t ui32Base)
+uint32_t I2CMasterErr (uint32_t ui32Base)
+void I2CMasterGlitchFilterConfigSet (uint32_t ui32Base, uint32_t ui32Config)
+void I2CMasterInitExpClk (uint32_t ui32Base, uint32_t ui32I2CClk, bool bFast)
+void I2CMasterIntClear (uint32_t ui32Base)
+void I2CMasterIntClearEx (uint32_t ui32Base, uint32_t ui32IntFlags)
+void I2CMasterIntDisable (uint32_t ui32Base)
+void I2CMasterIntDisableEx (uint32_t ui32Base, uint32_t ui32IntFlags)
+void I2CMasterIntEnable (uint32_t ui32Base)
+void I2CMasterIntEnableEx (uint32_t ui32Base, uint32_t ui32IntFlags)
+bool I2CMasterIntStatus (uint32_t ui32Base, bool bMasked)
+uint32_t I2CMasterIntStatusEx (uint32_t ui32Base, bool bMasked)
+uint32_t I2CMasterLineStateGet (uint32_t ui32Base)
+void I2CMasterSlaveAddrSet (uint32_t ui32Base, uint8_t ui8SlaveAddr, bool bReceive)
+void I2CMasterTimeoutSet (uint32_t ui32Base, uint32_t ui32Value)
+void I2CRxFIFOConfigSet (uint32_t ui32Base, uint32_t ui32Config)
+void I2CRxFIFOFlush (uint32_t ui32Base)
+void I2CSlaveACKOverride (uint32_t ui32Base, bool bEnable)
+void I2CSlaveACKValueSet (uint32_t ui32Base, bool bACK)
+void I2CSlaveAddressSet (uint32_t ui32Base, uint8_t ui8AddrNum, uint8_t ui8SlaveAddr)
+uint32_t I2CSlaveDataGet (uint32_t ui32Base)
+void I2CSlaveDataPut (uint32_t ui32Base, uint8_t ui8Data)
+void I2CSlaveDisable (uint32_t ui32Base)
+void I2CSlaveEnable (uint32_t ui32Base)
+void I2CSlaveFIFODisable (uint32_t ui32Base)
+void I2CSlaveFIFOEnable (uint32_t ui32Base, uint32_t ui32Config)
+void I2CSlaveInit (uint32_t ui32Base, uint8_t ui8SlaveAddr)
+void I2CSlaveIntClear (uint32_t ui32Base)
+void I2CSlaveIntClearEx (uint32_t ui32Base, uint32_t ui32IntFlags)
+void I2CSlaveIntDisable (uint32_t ui32Base)
+void I2CSlaveIntDisableEx (uint32_t ui32Base, uint32_t ui32IntFlags)
+void I2CSlaveIntEnable (uint32_t ui32Base)
+void I2CSlaveIntEnableEx (uint32_t ui32Base, uint32_t ui32IntFlags)
+bool I2CSlaveIntStatus (uint32_t ui32Base, bool bMasked)
+uint32_t I2CSlaveIntStatusEx (uint32_t ui32Base, bool bMasked)
+uint32_t I2CSlaveStatus (uint32_t ui32Base)
+void I2CTxFIFOConfigSet (uint32_t ui32Base, uint32_t ui32Config)
+void I2CTxFIFOFlush (uint32_t ui32Base)
+
