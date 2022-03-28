@@ -1,5 +1,8 @@
 ### Basic Ports 
 
+![image](https://user-images.githubusercontent.com/93160540/160483828-0df5835c-5573-4f8c-b2bb-241aa3b16ba6.png)
+
+
 Ports | Function
 ------------- | -------------
 PA2 ~ PA7  | PA6: I2C1SCL / PA7: I2C1SDA 
@@ -224,57 +227,88 @@ I2CMasterDataGet() | If no error --> Data has been sent or ready to be read.
 
 Functions 
 
-uint32_t I2CFIFODataGet (uint32_t ui32Base)
-uint32_t I2CFIFODataGetNonBlocking (uint32_t ui32Base, uint8_t ∗pui8Data)
-void I2CFIFODataPut (uint32_t ui32Base, uint8_t ui8Data)
-uint32_t I2CFIFODataPutNonBlocking (uint32_t ui32Base, uint8_t ui8Data)
-uint32_t I2CFIFOStatus (uint32_t ui32Base)
-void I2CIntRegister (uint32_t ui32Base, void (∗pfnHandler)(void))
-void I2CIntUnregister (uint32_t ui32Base)
-uint32_t I2CMasterBurstCountGet (uint32_t ui32Base)
-void I2CMasterBurstLengthSet (uint32_t ui32Base, uint8_t ui8Length)
-bool I2CMasterBusBusy (uint32_t ui32Base)
-bool I2CMasterBusy (uint32_t ui32Base)
-void I2CMasterControl (uint32_t ui32Base, uint32_t ui32Cmd)
-uint32_t I2CMasterDataGet (uint32_t ui32Base)
-void I2CMasterDataPut (uint32_t ui32Base, uint8_t ui8Data)
-void I2CMasterDisable (uint32_t ui32Base)
-void I2CMasterEnable (uint32_t ui32Base)
-uint32_t I2CMasterErr (uint32_t ui32Base)
-void I2CMasterGlitchFilterConfigSet (uint32_t ui32Base, uint32_t ui32Config)
-void I2CMasterInitExpClk (uint32_t ui32Base, uint32_t ui32I2CClk, bool bFast)
-void I2CMasterIntClear (uint32_t ui32Base)
-void I2CMasterIntClearEx (uint32_t ui32Base, uint32_t ui32IntFlags)
-void I2CMasterIntDisable (uint32_t ui32Base)
-void I2CMasterIntDisableEx (uint32_t ui32Base, uint32_t ui32IntFlags)
-void I2CMasterIntEnable (uint32_t ui32Base)
-void I2CMasterIntEnableEx (uint32_t ui32Base, uint32_t ui32IntFlags)
-bool I2CMasterIntStatus (uint32_t ui32Base, bool bMasked)
-uint32_t I2CMasterIntStatusEx (uint32_t ui32Base, bool bMasked)
-uint32_t I2CMasterLineStateGet (uint32_t ui32Base)
-void I2CMasterSlaveAddrSet (uint32_t ui32Base, uint8_t ui8SlaveAddr, bool bReceive)
-void I2CMasterTimeoutSet (uint32_t ui32Base, uint32_t ui32Value)
-void I2CRxFIFOConfigSet (uint32_t ui32Base, uint32_t ui32Config)
-void I2CRxFIFOFlush (uint32_t ui32Base)
-void I2CSlaveACKOverride (uint32_t ui32Base, bool bEnable)
-void I2CSlaveACKValueSet (uint32_t ui32Base, bool bACK)
-void I2CSlaveAddressSet (uint32_t ui32Base, uint8_t ui8AddrNum, uint8_t ui8SlaveAddr)
-uint32_t I2CSlaveDataGet (uint32_t ui32Base)
-void I2CSlaveDataPut (uint32_t ui32Base, uint8_t ui8Data)
-void I2CSlaveDisable (uint32_t ui32Base)
-void I2CSlaveEnable (uint32_t ui32Base)
-void I2CSlaveFIFODisable (uint32_t ui32Base)
-void I2CSlaveFIFOEnable (uint32_t ui32Base, uint32_t ui32Config)
-void I2CSlaveInit (uint32_t ui32Base, uint8_t ui8SlaveAddr)
-void I2CSlaveIntClear (uint32_t ui32Base)
-void I2CSlaveIntClearEx (uint32_t ui32Base, uint32_t ui32IntFlags)
-void I2CSlaveIntDisable (uint32_t ui32Base)
-void I2CSlaveIntDisableEx (uint32_t ui32Base, uint32_t ui32IntFlags)
-void I2CSlaveIntEnable (uint32_t ui32Base)
-void I2CSlaveIntEnableEx (uint32_t ui32Base, uint32_t ui32IntFlags)
-bool I2CSlaveIntStatus (uint32_t ui32Base, bool bMasked)
-uint32_t I2CSlaveIntStatusEx (uint32_t ui32Base, bool bMasked)
-uint32_t I2CSlaveStatus (uint32_t ui32Base)
-void I2CTxFIFOConfigSet (uint32_t ui32Base, uint32_t ui32Config)
-void I2CTxFIFOFlush (uint32_t ui32Base)
+- uint32_t I2CFIFODataGet (uint32_t ui32Base)
+- uint32_t I2CFIFODataGetNonBlocking (uint32_t ui32Base, uint8_t ∗pui8Data)
+- void I2CFIFODataPut (uint32_t ui32Base, uint8_t ui8Data)
+- uint32_t I2CFIFODataPutNonBlocking (uint32_t ui32Base, uint8_t ui8Data)
+- uint32_t I2CFIFOStatus (uint32_t ui32Base)
+- void I2CIntRegister (uint32_t ui32Base, void (∗pfnHandler)(void))
+- void I2CIntUnregister (uint32_t ui32Base)
+- uint32_t I2CMasterBurstCountGet (uint32_t ui32Base)
+- void I2CMasterBurstLengthSet (uint32_t ui32Base, uint8_t ui8Length)
+- bool I2CMasterBusBusy (uint32_t ui32Base)
+- bool I2CMasterBusy (uint32_t ui32Base)
+- void I2CMasterControl (uint32_t ui32Base, uint32_t ui32Cmd)
+- uint32_t I2CMasterDataGet (uint32_t ui32Base)
+- void I2CMasterDataPut (uint32_t ui32Base, uint8_t ui8Data)
+- void I2CMasterDisable (uint32_t ui32Base)
+- void I2CMasterEnable (uint32_t ui32Base)
+- uint32_t I2CMasterErr (uint32_t ui32Base)
+- void I2CMasterGlitchFilterConfigSet (uint32_t ui32Base, uint32_t ui32Config)
+- void I2CMasterInitExpClk (uint32_t ui32Base, uint32_t ui32I2CClk, bool bFast)
+- void I2CMasterIntClear (uint32_t ui32Base)
+- void I2CMasterIntClearEx (uint32_t ui32Base, uint32_t ui32IntFlags)
+- void I2CMasterIntDisable (uint32_t ui32Base)
+- void I2CMasterIntDisableEx (uint32_t ui32Base, uint32_t ui32IntFlags)
+- void I2CMasterIntEnable (uint32_t ui32Base)
+- void I2CMasterIntEnableEx (uint32_t ui32Base, uint32_t ui32IntFlags)
+- bool I2CMasterIntStatus (uint32_t ui32Base, bool bMasked)
+- uint32_t I2CMasterIntStatusEx (uint32_t ui32Base, bool bMasked)
+- uint32_t I2CMasterLineStateGet (uint32_t ui32Base)
+- void I2CMasterSlaveAddrSet (uint32_t ui32Base, uint8_t ui8SlaveAddr, bool bReceive)
+- void I2CMasterTimeoutSet (uint32_t ui32Base, uint32_t ui32Value)
+- void I2CRxFIFOConfigSet (uint32_t ui32Base, uint32_t ui32Config)
+- void I2CRxFIFOFlush (uint32_t ui32Base)
+- void I2CSlaveACKOverride (uint32_t ui32Base, bool bEnable)
+- void I2CSlaveACKValueSet (uint32_t ui32Base, bool bACK)
+- void I2CSlaveAddressSet (uint32_t ui32Base, uint8_t ui8AddrNum, uint8_t ui8SlaveAddr)
+- uint32_t I2CSlaveDataGet (uint32_t ui32Base)
+- void I2CSlaveDataPut (uint32_t ui32Base, uint8_t ui8Data)
+- void I2CSlaveDisable (uint32_t ui32Base)
+- void I2CSlaveEnable (uint32_t ui32Base)
+- void I2CSlaveFIFODisable (uint32_t ui32Base)
+- void I2CSlaveFIFOEnable (uint32_t ui32Base, uint32_t ui32Config)
+- void I2CSlaveInit (uint32_t ui32Base, uint8_t ui8SlaveAddr)
+- void I2CSlaveIntClear (uint32_t ui32Base)
+- void I2CSlaveIntClearEx (uint32_t ui32Base, uint32_t ui32IntFlags)
+- void I2CSlaveIntDisable (uint32_t ui32Base)
+- void I2CSlaveIntDisableEx (uint32_t ui32Base, uint32_t ui32IntFlags)
+- void I2CSlaveIntEnable (uint32_t ui32Base)
+- void I2CSlaveIntEnableEx (uint32_t ui32Base, uint32_t ui32IntFlags)
+- bool I2CSlaveIntStatus (uint32_t ui32Base, bool bMasked)
+- uint32_t I2CSlaveIntStatusEx (uint32_t ui32Base, bool bMasked)
+- uint32_t I2CSlaveStatus (uint32_t ui32Base)
+- void I2CTxFIFOConfigSet (uint32_t ui32Base, uint32_t ui32Config)
+- void I2CTxFIFOFlush (uint32_t ui32Base)
+
+
+<img width="362" alt="image" src="https://user-images.githubusercontent.com/93160540/160477391-8490b5c4-f017-4d09-a2fe-bb42e1eb60e6.png">
+
+<img width="497" alt="image" src="https://user-images.githubusercontent.com/93160540/160478187-0a56d9eb-6599-4758-ba6b-e0cfe6c3bb5d.png">
+
+
+1602 LCD Pins | Purpose 
+-----------|-----------
+GND | Ground 
+VCC | Power Supply 
+V0 | LCD Contrast: use potentiometer to set contrast 
+RS | Register Select 
+
+
+RS Pin 
+Low | High 
+----|------
+send command to LCD | sending Data/Characters to the LCD 
+cursor to specific location, clear display ,scroll the display, etc... | sending character
+
+E (Enable) 
+Low | High 
+----|------
+ignore R/W, RS, bus | process R/W, RS, bus data 
+
+D0-D7 
+- To display "A": 01000001 to LCD (ASCII table.) x41 = [A]
+
+A-C (Anode, Cathode) 
+- used to control backlight of the LCD
 
