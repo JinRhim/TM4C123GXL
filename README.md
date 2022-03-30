@@ -76,19 +76,7 @@ GPIO_PORTF_PUR_R |= 0x10;
     1. IF SW1 is pressed --> if((GPIO_PORTF_DATA_R&0x10)==0x00)
     2. IF SW2 is pressed --> if((GPIO_PORTF_DATA_R&0x01)==0x00)
 
-
-3. Pseudo-Interrupt mimic code 
 ```
-
-while (1){
- 	for (int i=0;i<1000;i++){
- 		if(SW1 == pressed){ }
-		else {} 
-		if (SW2 == pressed) { }
-		
-		SysCtlDelay(5333333/1000)
- 	}
-}
 
 ```
 
