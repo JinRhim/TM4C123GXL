@@ -1,20 +1,5 @@
 # Basic Ports 
 
-![image](https://user-images.githubusercontent.com/93160540/160483828-0df5835c-5573-4f8c-b2bb-241aa3b16ba6.png)
-
-
-Ports | Function
-------------- | -------------
-PA2 ~ PA7  | PA6: I2C1SCL / PA7: I2C1SDA 
-PB0 ~ PB7  | PB2: I2C0SCL / PB3: I2C0SDA
-PC4 ~ PC6  | 
-PD0 ~ PD7  | PD0: I2C3SCL / PD1: I2C3SDA
-PE0 ~ PE1  | PE4: I2C2SCL / PE5: I2CSDA
-PF0 ~ PF4  | PF0: SW2 / PF4: SW1
-
-
-
-
 ### Initial Port Activation 
 
 1. RCGC2 (Run Mode Clock Gating Control Register 2) - enable clock for specific port. 
@@ -29,8 +14,6 @@ PF0 ~ PF4  | PF0: SW2 / PF4: SW1
     1. IF device is not connected to anything --> neither low nor high 
 
 6. DEN (Digital Enable Register)
-
-
 
 
 ### PortFunctionInit() for Port F
@@ -111,7 +94,6 @@ System Clock = 400 MHz/2/SYSCTL_SYSDIV_(Number)
  
 3. SysCtlDelay(5333333) -  #include "driverlib/sysctl.h"
  
- 
 4. Code
  
 ```
@@ -166,7 +148,7 @@ void PortF_Output(unsigned long data){ // write Port F
 ```
 
 
-# Interrupt
+# Lecture 6: Interrupt 
 
 1. Interrupt Conditions: All 4 of these must be true
 	1. NVIC enable
@@ -254,6 +236,10 @@ GPIO_PORTF_IS_R &= ~0x01; //PF0 is edge-sensitive
 GPIO_PORTF_IBE_R |= 0x01; //PF0 both edge trigger
 ```
 
+
+
+
+
 # I2C Communication 
 
 <img width="379" alt="image" src="https://user-images.githubusercontent.com/93160540/160469132-3dc94af1-d5a4-4bde-a460-f1612df81139.png">
@@ -284,6 +270,22 @@ Data Format with 7-bit address
 4. Steops of MAster Single Transmit
 
 <img width="376" alt="image" src="https://user-images.githubusercontent.com/93160540/160470705-c40370cc-6efd-49b7-a992-8c8ecc323b99.png">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
