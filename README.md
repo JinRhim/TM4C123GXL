@@ -182,29 +182,65 @@ void IntGlobalDisable(void)
 <img width="527" alt="image" src="https://user-images.githubusercontent.com/93160540/162279251-bc5a3f95-4547-448f-8401-21a2a29d5770.png">
 
 
-1. 4 Conditions of Interrupt Conditions 
+### 4 Conditions of Interrupt Conditions 
 	1. NVIC enable 
 	2. ARM - set Interrupt Mask Bit 
 	3. Global Enable
 	4. Trigger - hardware action sets a source-specific flag
 
-2. How to calculate NVIC_EN_Register 	
+### How to calculate NVIC_EN_Register 	
 
 NVIC Register | IRQ number
 ------------- | -------------
 NVIC_EN0_R  | 0 ~ 31
 NVIC_EN1_R | 32 ~ 63
 	
-	1. To enable UART2 Interrupt, 
-		1. UART2 IRQ = 33. 
-		2. Use NVIC_EN1_R --> Enable UART Interrupt bit as 1. 
-	2. To enable GPIOPortF_Handler, 
-		1. GPIOPortF_Hander IRQ = 30 
-		2. Use NVIC_EN0_R
-	
+1. To enable UART2 Interrupt, find out IRQ number
+ 	1. UART2 IRQ = 33. 
+ 	2. 2. Use NVIC_EN1_R --> Enable UART Interrupt bit as 1. 
+2. To enable GPIOPortF_Handler, 
+	1. GPIOPortF_Handler IRQ = 30 
+	2. Use NVIC_EN0_R
+3. To enable GPIOPortA_Handler,
+	1. GPIOPortA_Handler IRQ = 0
+	2. Use NVIC_EN0_R 
+
+### How to calculate offset for NVIC Registers 
+<img width="512" alt="image" src="https://user-images.githubusercontent.com/93160540/162282594-fe568e20-26ab-4e02-b5b0-b6afc9ec72f7.png">
+
+1. In order to enable GPIO_PortF, 30th bit should be 1. 
+- 0b0100.0000.0000.0000.0000.0000.0000.0000. 
+- ⇒ NVIC_EN0_R |= 0x4000.0000. 
+
+2. In order to enable GPIO port A, 0st bit should be 1. 
+- 0b0000.0000.0000.0000.0000.0000.0000.0000 
+- ⇒ NVIC_EN0_R |= 0x0000.0001. 
+
+3. In order to enable UART2 interrupt, 1st bit should be 1. 
+- 0b0000.0000.0000.0000.0000.0000.0000.0010
+- ⇒ NVIC_EN1_R |= 0x0000.0010
 
 
+### How to select PRI Registers 
+- Look up table and figure out which PRI_Registers to use.
 
+* Simple summary chart
+Port | PRI Registers to use
+------------- | -------------
+Port A  | NVIC_PRI0_R
+Port B  | NVIC_PRI0_R
+Port C  | NVIC_PRI0_R
+Port D  | NVIC_PRI0_R
+Port E  | NVIC_PRI1_R
+Port F  | NVIC_PRI7_R
+Timer 0A  | NVIC_PRI4_R
+
+### How to calculate PRI Register offset (NVIC_PRI7_R &= 0x00E00000)
+<img width="880" alt="image" src="https://user-images.githubusercontent.com/93160540/162283684-f4f463c7-78db-4e29-999e-fc4b00ec9f94.png">
+
+
+### How to set Edge Trigger 
+<img width="596" alt="image" src="https://user-images.githubusercontent.com/93160540/162283920-9220ee44-eac9-45c4-9c85-7a4c58be9656.png">
 
 
 
