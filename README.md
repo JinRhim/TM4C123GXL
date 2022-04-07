@@ -183,10 +183,10 @@ void IntGlobalDisable(void)
 
 
 ### 4 Conditions of Interrupt Conditions 
-	1. NVIC enable 
-	2. ARM - set Interrupt Mask Bit 
-	3. Global Enable
-	4. Trigger - hardware action sets a source-specific flag
+- NVIC enable 
+- ARM - set Interrupt Mask Bit 
+- Global Enable
+- Trigger - hardware action sets a source-specific flag
 
 ### How to calculate NVIC_EN_Register 	
 
