@@ -150,91 +150,59 @@ void PortF_Output(unsigned long data){ // write Port F
 
 # Lecture 6: Interrupt 
 
-1. Interrupt Conditions: All 4 of these must be true
-	1. NVIC enable
-		1. allow interrupt for specific source in NVIC 
-		2. NVIC_ENx_R  
-		3. NVIC_PRIx_R 
-	2. ARM  
-		1. Set interrupt mask bit
-		2.  configure IMR register 
-	3. Global Enable 
-		1. Interrupt globally enabled (I=0 in PRIMASK)
-	4. Trigger 
-		1. Hardware action --> set source specific flag
-
-
-* Cortex-M4 Exception Types 
-<img width="874" alt="image" src="https://user-images.githubusercontent.com/93160540/160904941-abc77708-797a-4705-ab86-3ad65b78e868.png">
-
-* Cortex-M4 Interrupts 
-	1. Vector Address - Pointer: ISR beginning address
-	2. Vector Number - stored in IPSR during context switch 
-	3. Interrupt Number (IRQ Number) - Bit in NVIC registers
-<img width="714" alt="image" src="https://user-images.githubusercontent.com/93160540/160905038-f18bcc68-a2ff-4a6a-b5c7-bea63d7cf759.png">
-
-* Program Status Register
-<img width="865" alt="image" src="https://user-images.githubusercontent.com/93160540/160907824-f574eda7-1744-4b5b-b1a2-3af40a726fee.png">
-
-
-
-7. **BASEPRI** - set priority 0 ~ 7.
-	1. IF BASEPRI = 3, 
-	2. 0 ~ 2 can occur 
-	3. 3- 7 are masked. 
-	4. Default: BASEPRI = 0. All exceptions are unmasked. 
-
-8. NVIC Interrupt Enable Register 
-
-Enable Registers | Controls...
--------------|------------
-NVIC_EN0_R | IRQ 0 ~ 31 
-NVIC_EN1_R | IRQ 32 ~ 6
-NVIC_EN2_R | ?
-NVIC_EN3_R | ?
-NVIC_EN4_R | ?
-
-* Cortex-M4 Interrupts 
-<img width="693" alt="image" src="https://user-images.githubusercontent.com/93160540/160931034-905081b5-1bd3-41ef-93f0-6283ae4a16e3.png">
-
-
-9. Example of Enabling NVIC Interrupt Enable Registes 
+## Basic Interrupt Initialization 
 
 ```
-//enable interrupt 30 in NVIC (GPIOF) 
-NVIC_EN0_R |= 0x4000.0000;   
-NVIC_PRI7_R &= ~0x00E0.0000;    //configure GPIOF interrupt priority as 0
+void
+Interrupt_Init(void)
+{
+        NVIC_EN0_R |= 0x40000000;  		// enable interrupt 30 in NVIC (GPIOF)
+	NVIC_PRI7_R &= 0x00E00000; 		// configure GPIOF interrupt priority as 0
+	GPIO_PORTF_IM_R |= 0x11;   		// arm interrupt on PF0 and PF4
+	GPIO_PORTF_IS_R &= ~0x11;     // PF0 and PF4 are edge-sensitive. set 0
+        GPIO_PORTF_IBE_R &= ~0x11;   	// PF0 and PF4 not both edges trigger. set 0
+        GPIO_PORTF_IEV_R &= ~0x11;  	// PF0 and PF4 falling edge event. set 0
+	IntGlobalEnable();        		// globally enable interrupt
+}
 
-//0b0000.0000.[010]0.0000.0000.0000.0000.0000. --> NVIC_PRI_4_R
 
-```
-
-10. Globally Enable Interrupt
-
-```
 void IntGlobalEnable(void)
 {
-__asm("cpsie i\n"); // Inline assembly 
+    __asm("    cpsie   i\n");
+}
+
+//Globally disable interrupts 
+void IntGlobalDisable(void)
+{
+    __asm("    cpsid   i\n");
 }
 
 ```
+<img width="514" alt="image" src="https://user-images.githubusercontent.com/93160540/162279195-700fb811-f89d-4797-9a15-6281ffd5869e.png">
+<img width="527" alt="image" src="https://user-images.githubusercontent.com/93160540/162279251-bc5a3f95-4547-448f-8401-21a2a29d5770.png">
 
-11. How to set Trigger 
-Register | Port | Function
---------|-------|---------
-IS (Interrupt Sense) | GPIO_PORTx_IS_R | 0: edge triggering. 1: level triggering 
-IBE (Interrupt Both Edges) | GPIO_PORTx_IBE_R | 1 --> both edge triggered 
-IEV (Interrupt Event) | GPIO_PORTx_IEV_R | 1: Rising edge triggering. 0: Falling edge triggering
-IME (Interrupt Mask Enable) | GPIO_PORTx_IM_R | 1: ARM interrupt 0: disarm Interrupt 
 
-<img width="821" alt="image" src="https://user-images.githubusercontent.com/93160540/160934070-3f104427-7e5c-4f49-bbc4-7611a686480a.png">
+1. 4 Conditions of Interrupt Conditions 
+	1. NVIC enable 
+	2. ARM - set Interrupt Mask Bit 
+	3. Global Enable
+	4. Trigger - hardware action sets a source-specific flag
 
-12. Sample Code for Edge-triggered Modes 
-```
-GPIO_PORTF_IM_R |= 0x01;  //arm interrupt on PF0 
-GPIO_PORTF_IS_R &= ~0x01; //PF0 is edge-sensitive 
-GPIO_PORTF_IBE_R |= 0x01; //PF0 both edge trigger
-```
+2. How to calculate NVIC_EN_Register 	
+
+NVIC Register | IRQ number
+------------- | -------------
+NVIC_EN0_R  | 0 ~ 31
+NVIC_EN1_R | 32 ~ 63
+	
+	1. To enable UART2 Interrupt, 
+		1. UART2 IRQ = 33. 
+		2. Use NVIC_EN1_R --> Enable UART Interrupt bit as 1. 
+	2. To enable GPIOPortF_Handler, 
+		1. GPIOPortF_Hander IRQ = 30 
+		2. Use NVIC_EN0_R
+	
+
 
 
 
