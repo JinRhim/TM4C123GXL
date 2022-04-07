@@ -148,7 +148,7 @@ void PortF_Output(unsigned long data){ // write Port F
 ```
 
 
-# Lecture 6: Interrupt 
+# Interrupt 
 
 ## Basic Interrupt Initialization 
 
