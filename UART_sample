@@ -62,7 +62,7 @@ int main(void) {
 
     while (1) //let interrupt handler do the UART echo function
     {
-//    	if (UARTCharsAvail(UART0_BASE)) UARTCharPut(UART0_BASE, UARTCharGet(UART0_BASE));
+     //if (UARTCharsAvail(UART0_BASE)) UARTCharPut(UART0_BASE, UARTCharGet(UART0_BASE));
     }
 
 }
