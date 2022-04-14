@@ -1,0 +1,12 @@
+.\switch_delay_interrupt_pinmux.o: switch_delay_interrupt_PinMux.c
+.\switch_delay_interrupt_pinmux.o: C:\Keil\ARM\ARMCC\bin\..\include\stdint.h
+.\switch_delay_interrupt_pinmux.o: C:\Keil\ARM\ARMCC\bin\..\include\stdbool.h
+.\switch_delay_interrupt_pinmux.o: switch_delay_interrupt_PinMux.h
+.\switch_delay_interrupt_pinmux.o: ..\..\..\..\inc/hw_types.h
+.\switch_delay_interrupt_pinmux.o: ..\..\..\..\inc/hw_memmap.h
+.\switch_delay_interrupt_pinmux.o: ..\..\..\..\inc/hw_gpio.h
+.\switch_delay_interrupt_pinmux.o: ..\..\..\..\driverlib/sysctl.h
+.\switch_delay_interrupt_pinmux.o: ..\..\..\..\driverlib/pin_map.h
+.\switch_delay_interrupt_pinmux.o: ..\..\..\..\driverlib/gpio.h
+.\switch_delay_interrupt_pinmux.o: ..\..\..\..\driverlib/interrupt.h
+.\switch_delay_interrupt_pinmux.o: ..\..\..\..\inc/tm4c123gh6pm.h
