@@ -41,18 +41,18 @@ void ADC0_Init(void)
 		ADCSequenceDisable(ADC0_BASE,3);
 		//ADCSequenceConfigure(ADC module base address, sample sequence number, trigger source, priority of sample sequence)
 		
-	//ADCSequenceConfigure(A, B, C, D);
-	//A = adc module address 
-	//B = Sequence Num : Sample Sequence Number 
-	//C = Trigger Source 
-	//D = priority 
+		//ADCSequenceConfigure(A, B, C, D);
+		//A = adc module address 
+		//B = Sequence Num : Sample Sequence Number 
+		//C = Trigger Source 
+		//D = priority 
 	
 		//ADCSequenceConfigure(ADC0_BASE, 1, ADC_TRIGGER_PROCESSOR, 0); // will use ADC0, SS1, processor-trigger, priority 0
-	    ADCSequenceConfigure(ADC0_BASE, 3, ADC_TRIGGER_PROCESSOR, 0);
+	    	ADCSequenceConfigure(ADC0_BASE, 3, ADC_TRIGGER_PROCESSOR, 0);
 	
 		//ADC_CTL_TS --> Temperature sensor input.
 	
-	  //ADC0 SS1 Step 0, sample from internal temperature sensor
+	  	//ADC0 SS1 Step 0, sample from internal temperature sensor
 		ADCSequenceStepConfigure(ADC0_BASE, 3, 0, ADC_CTL_TS); 
 		
 		//ADC0 SS1 Step 0, sample from internal temperature sensor, completion of this step will set RIS, last sample of the sequence
@@ -96,11 +96,11 @@ void ADC0_Handler(void)
 		ADCIntClear(ADC0_BASE, 3);
 		ADCProcessorTrigger(ADC0_BASE, 3);   //What does it do --> start the reading.
 		
-	  ADCSequenceDataGet(ADC0_BASE, 3, ui32ADC0Value);
+	  	ADCSequenceDataGet(ADC0_BASE, 3, ui32ADC0Value);
     
 		//ui32TempAvg = (ui32ADC0Value[0] + ui32ADC0Value[1] + ui32ADC0Value[2] + ui32ADC0Value[3] + 2)/4;
 		
-	  //SS1 = can store 4 samples 
+	  	//SS1 = can store 4 samples 
 		//SS3 = can store 1 samples
 		
 		ui32TempAvg = *ui32ADC0Value;
@@ -123,7 +123,7 @@ void PE_Init() {
 		//using PE3 for the sensor reading
 		
 		//0000.1000
-	  //SET DIR as 0 for input. 
+	  	//SET DIR as 0 for input. 
 		GPIO_PORTE_DIR_R &= ~0x08;       
 
 		//Disable digital function --> DISABLE DIGITAL
@@ -149,17 +149,17 @@ void IntGlobalEnable(void)
 
 void Timer0A_Init(unsigned long period)
 {   
-	volatile uint32_t ui32Loop; 
+  volatile uint32_t ui32Loop; 
 	
-	SYSCTL_RCGC1_R |= SYSCTL_RCGC1_TIMER0; // activate timer0
+  SYSCTL_RCGC1_R |= SYSCTL_RCGC1_TIMER0; // activate timer0
   ui32Loop = SYSCTL_RCGC1_R;				// Do a dummy read to insert a few cycles after enabling the peripheral.
   TIMER0_CTL_R &= ~0x00000001;     // disable timer0A during setup
   TIMER0_CFG_R = 0x00000000;       // configure for 32-bit timer mode
   TIMER0_TAMR_R = 0x00000002;      // configure for periodic mode, default down-count settings
   TIMER0_TAILR_R = period-1;       // reload value
-	NVIC_PRI4_R &= ~0xE0000000; 	 // configure Timer0A interrupt priority as 0
+  NVIC_PRI4_R &= ~0xE0000000; 	 // configure Timer0A interrupt priority as 0
   NVIC_EN0_R |= 0x00080000;     // enable interrupt 19 in NVIC (Timer0A)
-	TIMER0_IMR_R |= 0x00000001;      // arm timeout interrupt
+  TIMER0_IMR_R |= 0x00000001;      // arm timeout interrupt
   TIMER0_CTL_R |= 0x00000001;      // enable timer0A
 }
 
@@ -170,7 +170,7 @@ void Timer0A_Handler(void)
 		TIMER0_ICR_R |= 0x00000001; 
 	
 		// Toggle the blue LED.
-    ADCProcessorTrigger(ADC0_BASE, 3);
+    		ADCProcessorTrigger(ADC0_BASE, 3);
 
 }
 
@@ -184,11 +184,12 @@ int main(void)
 	
 		PE_Init();
 		ADC0_Init();
-		IntMasterEnable();       		// globally enable interrupt
+		IntMasterEnable();       		
+		// globally enable interrupt
 	
-	  //ADCProecssorTrigger(A,B) 
-    // A --> base address of ADC module 
-	  // B --> sample sequence number
+	  	//ADCProecssorTrigger(A,B) 
+    		// A --> base address of ADC module 
+	  	// B --> sample sequence number
 		//ADCProcessorTrigger(ADC0_BASE, 3);
 	
 		while(1)
