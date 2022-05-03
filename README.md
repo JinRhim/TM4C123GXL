@@ -227,7 +227,6 @@ NVIC_EN1_R | 32 ~ 63
 ### How to select PRI Registers 
 - Look up table and figure out which PRI_Registers to use.
 
-* Simple summary chart
 Port | PRI Registers to use
 ---------------- | ------------------
 Port A  | NVIC_PRI0_R
