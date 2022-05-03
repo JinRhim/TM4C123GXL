@@ -15,6 +15,9 @@
 
 6. DEN (Digital Enable Register)
 
+### I/O Register Basic Address 
+<img width="629" alt="image" src="https://user-images.githubusercontent.com/93160540/166481030-ae4ec999-5ad7-4e08-bb12-8a881d2af51a.png">
+
 
 ### PortFunctionInit() for Port F
 ```
