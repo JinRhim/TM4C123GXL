@@ -119,9 +119,9 @@ __Vectors
         DCD     IntDefaultHandler           ; ADC Sequence 0
         DCD     IntDefaultHandler          		; ADC Sequence 1
         DCD     IntDefaultHandler           ; ADC Sequence 2
-        DCD     ADC0_Handler           ; ADC Sequence 3
+        DCD     ADC0_Handler                ; ADC Sequence 3
         DCD     IntDefaultHandler           ; Watchdog timer
-        DCD     IntDefaultHandler           ; Timer 0 subtimer A
+        DCD     Timer0A_Handler           ; Timer 0 subtimer A
         DCD     IntDefaultHandler           ; Timer 0 subtimer B
         DCD     IntDefaultHandler           ; Timer 1 subtimer A
         DCD     IntDefaultHandler           ; Timer 1 subtimer B

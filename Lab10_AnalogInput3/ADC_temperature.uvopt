@@ -170,12 +170,17 @@
         <Ww>
           <count>1</count>
           <WinNumber>1</WinNumber>
-          <ItemText>ui32TempValueC,0x0A</ItemText>
+          <ItemText>ui32ADC0Value[0]</ItemText>
         </Ww>
         <Ww>
           <count>2</count>
           <WinNumber>1</WinNumber>
-          <ItemText>ui32TempValueF,0x0A</ItemText>
+          <ItemText>ui32TempValueC</ItemText>
+        </Ww>
+        <Ww>
+          <count>3</count>
+          <WinNumber>1</WinNumber>
+          <ItemText>ui32TempValueF</ItemText>
         </Ww>
       </WatchWindow1>
       <MemoryWindow1>
