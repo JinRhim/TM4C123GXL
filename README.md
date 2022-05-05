@@ -15,6 +15,12 @@
 
 6. DEN (Digital Enable Register)
 
+#### Other ports 
+
+7. AMSEL (Analog Function Register) - analog: 1 digital: 0
+ 
+9. AFSEL (Alternate Function Register) - alternate function: 1 none: 0
+
 ### I/O Register Basic Address 
 <img width="629" alt="image" src="https://user-images.githubusercontent.com/93160540/166481030-ae4ec999-5ad7-4e08-bb12-8a881d2af51a.png">
 
@@ -46,7 +52,7 @@ GPIO_PORTF_DEN_R |= 0x08;
 GPIO_PORTF_DEN_R |= 0x10;
 		
 
-GPIO_PORTF_PUR_R |= 0x01;
+GPIO_PORTF_PUR_R |= 0x01;   //Pull-up register is only for PF0 and PF4. 
 GPIO_PORTF_PUR_R |= 0x10;
 ```
 
@@ -85,21 +91,28 @@ Not Pressed: 3.3v T | Not Pressed: 0v F
 
 
 
-### Clock Generation 
+## Clock Generation / Timer  
 1. Clock Generator 
   1. Precision Internal OScillator (PIOSC) - 16 MHz default 
   2. Main OScillator (MOSC) - 5 ~ 25 MHz
   3. Low Frequency Interal OScillator (LFIOSC) - 30KHz Deep Sleep Mode
   4. Hibernate Module Clock Source - 32.768 KHz Hibernate mode
  
-2. System Clock = always comes from 400 MHz source.   
-System Clock = 400 MHz/2/SYSCTL_SYSDIV_(Number)  
+2. Header File to include - #include "driverlib/sysctl.h"
  
-3. SysCtlDelay(5333333) -  #include "driverlib/sysctl.h"
+3. SysCtlDelay()
+- generates 3 redundant instruction to create delay. 
+- SysCtlDelay(1) will generate 3 instruction cycle. 
+- For example, SysCtlDelay(1 million) will generate 3 million redundant instruction.
+- If system clock is set to 10 MHz, it will create 0.3 seconds delay. 
+- Default clock: 16 MHz. In order to create 1 seconds delay, 16 million/3 = 5333333. 
+- SysCtlDelay(5333333) = 1 seonds delay
  
 4. Code
  
 ```
+System Clock = always comes from 400 MHz source.   
+System Clock = 400 MHz/2/SYSCTL_SYSDIV_(Number)  
 
 SysCtlClockSet(SYSCTL_SYSDIV_5 | SYSCTL_USE_PLL | SYSCTL_XTAL_16MHZ | SYSCTL_OSC_MAIN);
 //Clock = 400/2/5 --> 40 MHz
@@ -240,10 +253,19 @@ Timer 0A  | NVIC_PRI4_R
 ### How to calculate PRI Register offset (NVIC_PRI7_R &= 0x00E00000)
 <img width="880" alt="image" src="https://user-images.githubusercontent.com/93160540/162283684-f4f463c7-78db-4e29-999e-fc4b00ec9f94.png">
 
-
 ### How to set Edge Trigger 
 <img width="596" alt="image" src="https://user-images.githubusercontent.com/93160540/162283920-9220ee44-eac9-45c4-9c85-7a4c58be9656.png">
 
+### How to set up Edge Trigger Interrupt Initialization 
+1. NVIC_EN0/1_R - set to 1. (Look at chart to figure out NVIC_EN0 or EN1.) 
+2. NVIC_PRI_R - set to 0. (This will make priority. Setting it to 0 will make highest priority)(Look at datasheet to calculate offset constant)
+
+Edge Trigger Register Set | Number Set
+---------------- | ------------------
+GPIO_PORT_IM_R  | 0: no interrupt 1: interrupt
+GPIO_PORT_IS_R  | 0: Input. (Always set to 0)
+GPIO_PORT_IBE_R | 0: one edge trigger 1: both edge trigger
+GPIO_PORT_IEV_R | 0: falling edge trigger 1: rising edge trigger
 
 
 # I2C Communication 
