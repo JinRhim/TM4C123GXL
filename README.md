@@ -267,6 +267,30 @@ GPIO_PORT_IS_R  | 0: Input. (Always set to 0)
 GPIO_PORT_IBE_R | 0: one edge trigger 1: both edge trigger
 GPIO_PORT_IEV_R | 0: falling edge trigger 1: rising edge trigger
 
+```
+void Interrupt_Init(void) {
+	//NVIC Port D interrupt - PD1 and PD2 
+	//Port D IRQ = 3. 
+	//Use NVIC_EN0_R Register. 
+	//PortD = 3rd bit. 
+	//0b0000.0000.0000.0000.0000.0000.0000.0000.1000 --> 0x0000.0008 
+	NVIC_EN0_R |= 0x00000008; 
+	
+	//Set Priority Register - positive logic switch
+	NVIC_PRI0_R &= ~0xE0000000; 
+	
+	GPIO_PORTD_IM_R |= 0x06;  //ARM interrupt on PD1 and PD2. 
+	
+	GPIO_PORTD_IS_R &= ~0x06; //0: input. 
+	GPIO_PORTD_IBE_R &= ~0x06; //0: one edge trigger 1: both edge trigger
+        GPIO_PORTD_IEV_R |= 0x06; //0: falling edge trigger 1: rising edge trigger
+	
+	IntGlobalEnable(); 
+}
+```
+
+
+
 
 # I2C Communication 
 
