@@ -253,10 +253,7 @@ Timer 0A  | NVIC_PRI4_R
 ### How to calculate PRI Register offset (NVIC_PRI7_R &= 0x00E00000)
 <img width="880" alt="image" src="https://user-images.githubusercontent.com/93160540/162283684-f4f463c7-78db-4e29-999e-fc4b00ec9f94.png">
 
-### How to set Edge Trigger 
-<img width="596" alt="image" src="https://user-images.githubusercontent.com/93160540/162283920-9220ee44-eac9-45c4-9c85-7a4c58be9656.png">
-
-### How to set up Edge Trigger Interrupt Initialization 
+### How to set up Edge Trigger Interrupt Initialization - Summary Chart 
 1. NVIC_EN0/1_R - set to 1. (Look at chart to figure out NVIC_EN0 or EN1.) 
 2. NVIC_PRI_R - set to 0. (This will make priority. Setting it to 0 will make highest priority)(Look at datasheet to calculate offset constant)
 
@@ -266,6 +263,11 @@ GPIO_PORT_IM_R  | 0: no interrupt 1: interrupt
 GPIO_PORT_IS_R  | 0: Input. (Always set to 0)
 GPIO_PORT_IBE_R | 0: one edge trigger 1: both edge trigger
 GPIO_PORT_IEV_R | 0: falling edge trigger 1: rising edge trigger
+
+<img width="596" alt="image" src="https://user-images.githubusercontent.com/93160540/162283920-9220ee44-eac9-45c4-9c85-7a4c58be9656.png">
+
+
+##### Example Codes for Rising Edge Trigger of PD1 and PD2
 
 ```
 void Interrupt_Init(void) {
