@@ -293,6 +293,80 @@ void Interrupt_Init(void) {
 
 
 
+# Timer 
+
+
+```
+
+void IntGlobalEnable(void)
+{
+    __asm("    cpsie   i\n");
+}
+
+void Timer0A_Init(unsigned long period)
+{   
+	volatile uint32_t ui32Loop; 
+	
+	SYSCTL_RCGC1_R |= SYSCTL_RCGC1_TIMER0; // activate timer0
+  ui32Loop = SYSCTL_RCGC1_R;				// Do a dummy read to insert a few cycles after enabling the peripheral.
+  TIMER0_CTL_R &= ~0x00000001;     // disable timer0A during setup
+  TIMER0_CFG_R = 0x00000000;       // configure for 32-bit timer mode
+  TIMER0_TAMR_R = 0x00000002;      // configure for periodic mode, default down-count settings
+  TIMER0_TAILR_R = period-1;       // reload value
+	NVIC_PRI4_R &= ~0xE0000000; 	 // configure Timer0A interrupt priority as 0
+  NVIC_EN0_R |= 0x00080000;     // enable interrupt 19 in NVIC (Timer0A)
+	TIMER0_IMR_R |= 0x00000001;      // arm timeout interrupt
+  TIMER0_CTL_R |= 0x00000001;      // enable timer0A
+}
+
+
+
+void Timer1A_Init(unsigned long period)
+{   
+	volatile uint32_t ui32Loop; 
+	
+	SYSCTL_RCGC1_R |= SYSCTL_RCGC1_TIMER1; // activate timer0
+  ui32Loop = SYSCTL_RCGC1_R;				// Do a dummy read to insert a few cycles after enabling the peripheral.
+  TIMER1_CTL_R &= ~0x00000001;     // disable timer0A during setup
+	//TAEN = 0  means that Timer A is disabled. 
+  TIMER1_CFG_R = 0x00000000;       // configure for 32-bit timer mode
+  //Wrote a value of 0x0000.0000 for one-shot/Periodic Timer mode 
+	TIMER1_TAMR_R = 0x00000002;      // configure for periodic mode, defaultdown-count settings
+  //GPTMTAMR Register = 0x02 --> Periodic Timer Mode
+	TIMER1_TAILR_R = period-1;       // reload value
+	NVIC_PRI5_R &= ~0x00E00000; 	 // configure Timer0A interrupt priority as 0
+	
+	//NVIC_PRI5_R IRQ = 21 
+	//0000.0000.1110.0000.0000.0000.0000.0000 = 0x00E00000;
+	
+	NVIC_EN0_R |= 0x0020000;     // enable interrupt 21 in NVIC (Timer0A)
+	//0000.0000.0010.0000.00000.0000.0000.0000 = 0x00200000;
+	
+	TIMER1_IMR_R |= 0x00000001;      // arm timeout interrupt
+  TIMER1_CTL_R |= 0x00000001;      // enable timer0A
+	
+}
+
+
+void Timer0A_Handler(void)
+{
+		// acknowledge flag for Timer0A 
+		//writing 1 to this bit clear TATORIS bit in GPTMRIS register 
+		//and the TATOMIS bit in the GPTMMIS register
+	
+		//GPTM Timer A Time-Out Raw Interrupt.
+		TIMER0_ICR_R |= 0x00000001; 
+	
+		//Every 1 seconds, the timer will trigger ADC SS3. 
+    ADCProcessorTrigger(ADC0_BASE, 3);
+
+}
+
+```
+
+
+
+
 
 # I2C Communication 
 
