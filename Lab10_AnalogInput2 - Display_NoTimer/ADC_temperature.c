@@ -50,7 +50,7 @@ void ADC0_Init(void)
 	
 		ADCSequenceDisable(ADC0_BASE,3);
 		
-	  ADCSequenceConfigure(ADC0_BASE, 3, ADC_TRIGGER_PROCESSOR, 0);
+	  	ADCSequenceConfigure(ADC0_BASE, 3, ADC_TRIGGER_PROCESSOR, 0);
 	
 		ADCSequenceStepConfigure(ADC0_BASE, 3, 0, ADC_CTL_CH0 | ADC_CTL_IE | ADC_CTL_END);
 
@@ -72,7 +72,7 @@ void ADC0_Init(void)
 void ADC0_Handler(void)
 {
 		ADCIntClear(ADC0_BASE, 3);
-	  ADCSequenceDataGet(ADC0_BASE, 3, ui32ADC0Value);
+	  	ADCSequenceDataGet(ADC0_BASE, 3, ui32ADC0Value);
    
 		ui32RawValue = (1475 - ((2475 * ui32ADC0Value[0])) / 4096)/10; 
 	
@@ -92,7 +92,7 @@ void Port_Init() {
 		//using PE3 for the sensor reading
 		
 		//0000.1000
-	  //SET DIR as 0 for input. 
+	  	//SET DIR as 0 for input. 
 		GPIO_PORTE_DIR_R &= ~0x08;       
 
 		//Disable digital function --> DISABLE DIGITAL
@@ -133,15 +133,15 @@ void Timer0A_Init(unsigned long period)
 	volatile uint32_t ui32Loop; 
 	
 	SYSCTL_RCGC1_R |= SYSCTL_RCGC1_TIMER0; // activate timer0
-  ui32Loop = SYSCTL_RCGC1_R;				// Do a dummy read to insert a few cycles after enabling the peripheral.
-  TIMER0_CTL_R &= ~0x00000001;     // disable timer0A during setup
-  TIMER0_CFG_R = 0x00000000;       // configure for 32-bit timer mode
-  TIMER0_TAMR_R = 0x00000002;      // configure for periodic mode, default down-count settings
-  TIMER0_TAILR_R = period-1;       // reload value
+  	ui32Loop = SYSCTL_RCGC1_R;				// Do a dummy read to insert a few cycles after enabling the peripheral.
+  	TIMER0_CTL_R &= ~0x00000001;     // disable timer0A during setup
+  	TIMER0_CFG_R = 0x00000000;       // configure for 32-bit timer mode
+  	TIMER0_TAMR_R = 0x00000002;      // configure for periodic mode, default down-count settings
+  	TIMER0_TAILR_R = period-1;       // reload value
 	NVIC_PRI4_R &= ~0xE0000000; 	 // configure Timer0A interrupt priority as 0
-  NVIC_EN0_R |= 0x00080000;     // enable interrupt 19 in NVIC (Timer0A)
+  	NVIC_EN0_R |= 0x00080000;     // enable interrupt 19 in NVIC (Timer0A)
 	TIMER0_IMR_R |= 0x00000001;      // arm timeout interrupt
-  TIMER0_CTL_R |= 0x00000001;      // enable timer0A
+  	TIMER0_CTL_R |= 0x00000001;      // enable timer0A
 }
 
 void Timer1A_Init(unsigned long period)
@@ -149,13 +149,13 @@ void Timer1A_Init(unsigned long period)
 	volatile uint32_t ui32Loop; 
 	
 	SYSCTL_RCGC1_R |= SYSCTL_RCGC1_TIMER1; // activate timer0
-  ui32Loop = SYSCTL_RCGC1_R;				// Do a dummy read to insert a few cycles after enabling the peripheral.
-  TIMER1_CTL_R &= ~0x00000001;     // disable timer0A during setup
+  	ui32Loop = SYSCTL_RCGC1_R;				// Do a dummy read to insert a few cycles after enabling the peripheral.
+  	TIMER1_CTL_R &= ~0x00000001;     // disable timer0A during setup
 	//TAEN = 0  means that Timer A is disabled. 
-  TIMER1_CFG_R = 0x00000000;       // configure for 32-bit timer mode
-  //Wrote a value of 0x0000.0000 for one-shot/Periodic Timer mode 
+  	TIMER1_CFG_R = 0x00000000;       // configure for 32-bit timer mode
+  	//Wrote a value of 0x0000.0000 for one-shot/Periodic Timer mode 
 	TIMER1_TAMR_R = 0x00000002;      // configure for periodic mode, defaultdown-count settings
-  //GPTMTAMR Register = 0x02 --> Periodic Timer Mode
+  	//GPTMTAMR Register = 0x02 --> Periodic Timer Mode
 	TIMER1_TAILR_R = period-1;       // reload value
 	NVIC_PRI5_R &= ~0x00E00000; 	 // configure Timer0A interrupt priority as 0
 	
@@ -180,7 +180,7 @@ void Timer0A_Handler(void)
 		counter++;
 	
 		// Port D, PortA - digit selector 
-    digit_selector_line = 0x80 >> msg_i;  //if index = 1 --> 10 
+    		digit_selector_line = 0x80 >> msg_i;  //if index = 1 --> 10 
 		
 		//digit = 0b1000.0000  ==> 0x80
 	  
@@ -191,7 +191,7 @@ void Timer0A_Handler(void)
 
 		// [PA7 PA6 PA5 PA4] [PF3 PF2 PF1 PF0]
 	
-    GPIO_PORTF_DATA_R = digit_selector_line & 0x0F;
+    		GPIO_PORTF_DATA_R = digit_selector_line & 0x0F;
 		GPIO_PORTF_DIR_R = 0x0F;
 
 	
@@ -224,9 +224,9 @@ int main(void)
 	SysCtlClockSet(SYSCTL_SYSDIV_20 | SYSCTL_USE_PLL | SYSCTL_XTAL_16MHZ | SYSCTL_OSC_MAIN);
     //Clock = 400/2/20 --> 10 MHz
 		
-		unsigned long period = 10000000/1000; //reload value to Timer0A to generate half second delay
+		unsigned long period = 10000000/1000; //Display Refresh Rate
 	
-		unsigned long period2 = 10000000; //Tiemr 1A  cond delay
+		unsigned long period2 = 10000000; //Tiemr 1A: update ADC value to display.
 	
 	
 	/* 
