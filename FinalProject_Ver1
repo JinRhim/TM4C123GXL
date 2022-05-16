@@ -29,6 +29,8 @@ char msg_array[8];
 //msg Array. Store ASCII table value for D[7:0]
 //D7 | D6 | D5 | D4 | D3 | D2 | D1 | D0 
 
+char str_buffer[8];
+
 char msg_i = 0; 
 //this is index of msg. it is always 0 to 7.
 
@@ -115,8 +117,6 @@ void ADC0_Init(void)
 void ADC0_Handler(void)
 {
 	
-		GPIO_PORTA_DATA_R ^= 0x04; //PA2
-		GPIO_PORTA_DATA_R ^= 0x10; //PA4
 		ADCIntClear(ADC0_BASE, 1); //Clear interrupt flag of ADC0 SS1
 		ADCProcessorTrigger(ADC0_BASE, 1); //Software trigger the next ADC sampling 
 		//GPIO_PORTA_DATA_R ^= 0x04; //PA2
@@ -131,7 +131,7 @@ void ADC0_Handler(void)
 		SysCtlDelay(SysCtlClockGet()/100000);
 
 	
-		GPIO_PORTA_DATA_R ^= 0x04; //PA2
+		
 	
 }
 
@@ -216,6 +216,19 @@ void Timer1A_Init(unsigned long period)
   TimerEnable(TIMER1_BASE, TIMER_A);      // enable timer0A
 }
 
+void Timer2A_Init()
+{   
+	//
+  // Enable Peripheral Clocks 
+
+  SysCtlPeripheralEnable(SYSCTL_PERIPH_TIMER2);
+  TimerConfigure(TIMER2_BASE, TIMER_CFG_ONE_SHOT); 		// configure for 32-bit timer mode
+	IntPrioritySet(INT_TIMER2A, 0x02);  	 // configure Timer1A interrupt priority as 0
+  IntEnable(INT_TIMER2A);    				// enable interrupt 19 in NVIC (Timer0A)
+	TimerIntEnable(TIMER2_BASE, TIMER_TIMA_TIMEOUT);      // arm timeout interrupt
+}
+
+
 
 //interrupt handler for Timer0A
 void Timer0A_Handler(void)
@@ -257,8 +270,18 @@ void Timer1A_Handler(void) {
 	TimerIntClear(TIMER1_BASE, TIMER_TIMA_TIMEOUT);
 	
 	ADCProcessorTrigger(ADC0_BASE, 3);
-	strcpy(msg_array, TO_STRING(ui32TempValueC));
+	//strcpy(msg_array, TO_STRING(ui32TempValueC));
 	debugger++;
+}
+
+
+void Timer2A_Handler(void)
+{
+		//Remove Flag
+		TimerIntClear(TIMER2_BASE, TIMER_TIMA_TIMEOUT);
+		strcpy(msg_array, "        ");
+		strcpy(msg_array, "  UU0r1d");
+	
 }
 
 
@@ -269,7 +292,7 @@ int main(void)
 		
 		unsigned long period = 10000000/2000; //reload value to Timer0A to generate half second delay
 	
-		unsigned long period2 = 1000000; //Tiemr 1A  cond delay
+		unsigned long period2 = 10000000; //Tiemr 1A  cond delay
 	
 	
 	/* 
@@ -328,19 +351,24 @@ int main(void)
 
 
 		Timer0A_Init(period); //100Hz display refresh rate 
-		//Timer1A_Init(period2);
 		Timer1A_Init(period2);
-		
+		Timer2A_Init();
 		
 		IntGlobalEnable();
+
+		strcpy(msg_array, "HELL0   ");
+		TimerLoadSet(TIMER2_BASE, TIMER_A, 50000000); //Count for 1 seconds
+		TimerEnable(TIMER2_BASE, TIMER_A); //automatic counter will start
 		
+		
+		//Beginning of Program 
+	
+		while(1)
+		{ 
 		//strcpy(msg_array, "01234567");
 		//strcpy(msg_array, "HELL0   ");
 		//strcpy(msg_array, "HrSEnS0r");
-		
-	
-		while(1)
-		{
+			
 			
 		}
 }
