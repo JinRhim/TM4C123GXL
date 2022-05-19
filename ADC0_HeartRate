@@ -39,7 +39,6 @@ volatile int HeartRate = 0;
 //ADC0 initializaiton
 void ADC0_Init(void)
 {
-		SysCtlClockSet(SYSCTL_SYSDIV_5|SYSCTL_USE_PLL|SYSCTL_OSC_MAIN|SYSCTL_XTAL_16MHZ); // configure the system clock to be 40MHz
 		SysCtlPeripheralEnable(SYSCTL_PERIPH_ADC0);	//activate the clock of ADC0
 		SysCtlDelay(2);	//insert a few cycles after enabling the peripheral to allow the clock to be fully activated.
 
@@ -100,7 +99,6 @@ void ADC0_Init(void)
 void ADC0_Handler(void)
 {
 		ADCIntClear(ADC0_BASE, 3);
-		ADCProcessorTrigger(ADC0_BASE, 3);   //What does it do --> start the reading.
 		
 	  ADCSequenceDataGet(ADC0_BASE, 3, ui32ADC0Value);
     
