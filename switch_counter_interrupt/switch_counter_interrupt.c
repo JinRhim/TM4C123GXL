@@ -16,6 +16,7 @@
 // increments at least once per button press
 volatile unsigned long count = 0;
 
+
 void
 PortFunctionInit(void)
 {
@@ -36,7 +37,7 @@ PortFunctionInit(void)
 
 	
 		// Set the direction of PF4 (SW1) and PF0 (SW2) as input by clearing the bit
-    GPIO_PORTF_DIR_R &= ~0x11;
+    GPIO_PORTF_DIR_R &= ~0x11; 
 	
     // Enable PF4, and PF0 for digital function.
     GPIO_PORTF_DEN_R |= 0x11;
@@ -61,13 +62,12 @@ void IntGlobalDisable(void)
 void
 Interrupt_Init(void)
 {
-	NVIC_EN0_R |= 0x40000000;  		// enable interrupt 30 in NVIC (GPIOF)
+  NVIC_EN0_R |= 0x40000000;  		// enable interrupt 30 in NVIC (GPIOF)
 	NVIC_PRI7_R &= 0x00E00000; 		// configure GPIOF interrupt priority as 0
 	GPIO_PORTF_IM_R |= 0x11;   		// arm interrupt on PF0 and PF4
-						//Interrupt only triggered at falling edge
-	GPIO_PORTF_IS_R &= ~0x11;     		// PF0 and PF4 are edge-sensitive. edge-triggered
-	GPIO_PORTF_IBE_R &= ~0x11;   		// PF0 and PF4 not both edges trigger 
-	GPIO_PORTF_IEV_R &= ~0x11;  		// PF0 and PF4 falling edge event
+	GPIO_PORTF_IS_R &= ~0x11;     // PF0 and PF4 are edge-sensitive. set 0
+  GPIO_PORTF_IBE_R &= ~0x11;   	// PF0 and PF4 not both edges trigger. set 0
+  GPIO_PORTF_IEV_R &= ~0x11;  	// PF0 and PF4 falling edge event. set 0
 	IntGlobalEnable();        		// globally enable interrupt
 }
 
@@ -79,16 +79,16 @@ void GPIOPortF_Handler(void)
 	if(GPIO_PORTF_RIS_R&0x10)
 	{
 		// acknowledge flag for PF4
-		GPIO_PORTF_ICR_R |= 0x10;    //acknowledge flag4
+		GPIO_PORTF_ICR_R |= 0x10; 
 		//counter imcremented by 1
 		count++;
 	}
 	
 	//SW2 is pressed
- 	if(GPIO_PORTF_RIS_R&0x01)
+  if(GPIO_PORTF_RIS_R&0x01)
 	{
 		// acknowledge flag for PF0
-		GPIO_PORTF_ICR_R |= 0x01;   //acknowledge flag0 
+		GPIO_PORTF_ICR_R |= 0x01; 
 		//counter imcremented by 1
 		count++;
 	}
@@ -102,9 +102,12 @@ int main(void)
 		//initialize the GPIO ports	
 		PortFunctionInit();
 		
-		//configure the GPIOF interrupt
+	//configure the GPIOF interrupt
 		Interrupt_Init();
 	
+    //
+    // Loop forever.
+    //
     while(1)
     {
 

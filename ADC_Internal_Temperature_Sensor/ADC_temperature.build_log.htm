@@ -1,0 +1,41 @@
+<html>
+<body>
+<pre>
+<h1>µVision Build Log</h1>
+<h2>Tool Versions:</h2>
+IDE-Version: µVision V5.36.0.0
+Copyright (C) 2021 ARM Ltd and ARM Germany GmbH. All rights reserved.
+License Information: Jin Rhim, SFSU, LIC=----
+ 
+Tool Versions:
+Toolchain:       MDK-Lite  Version: 5.36.0.0
+Toolchain Path:  C:\Keil_v5\ARM\ARMCC\Bin
+C Compiler:      Armcc.exe V5.06 update 7 (build 960)
+Assembler:       Armasm.exe V5.06 update 7 (build 960)
+Linker/Locator:  ArmLink.exe V5.06 update 7 (build 960)
+Library Manager: ArmAr.exe V5.06 update 7 (build 960)
+Hex Converter:   FromElf.exe V5.06 update 7 (build 960)
+CPU DLL:         SARMCM3.DLL V5.36.0.0
+Dialog DLL:      DCM.DLL V1.17.3.0
+Target DLL:      lmidk-agdi.dll V???
+Dialog DLL:      TCM.DLL V1.53.0.0
+ 
+<h2>Project:</h2>
+C:\ti\TivaWare_C_Series-2.1.4.178\examples\boards\my_project\Lab10_AnalogInput\ADC_temperature.uvproj
+Project File Date:  04/25/2022
+
+<h2>Output:</h2>
+*** Using Compiler 'V5.06 update 7 (build 960)', folder: 'C:\Keil_v5\ARM\ARMCC\Bin'
+Rebuild target 'Target 1'
+assembling startup_rvmdk.S...
+startup_rvmdk.S(122): error: A1516E: Bad symbol 'ADC', not defined or external
+compiling ADC_temperature.c...
+ADC_temperature.c(50): warning:  #550-D: variable "TempValueF"  was set but never used
+  	    uint32_t TempValueF ;
+ADC_temperature.c: 1 warning, 0 errors
+".\ADC_temperature.axf" - 1 Error(s), 1 Warning(s).
+Target not created.
+Build Time Elapsed:  00:00:01
+</pre>
+</body>
+</html>
